@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Web Page with Button</title>
+    <title>Button Click Counter</title>
 </head>
 <body>
-    <h1>Web Page with Button</h1>
-    <button id="myButton">Click Me!</button>
-    
+    <h1>Button Click Counter</h1>
+    <p>Click count: {{ click_count }}</p>
+    <button id="clickButton">Click Me</button>
+
     <script>
-        document.getElementById("myButton").onclick = function() {
-            alert("Button Clicked!");
-        };
+        document.getElementById('clickButton').addEventListener('click', function() {
+            fetch('/click', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    if (data === 'success') {
+                        // Update the displayed click count
+                        const clickCountElement = document.querySelector('p');
+                        const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
+                        clickCountElement.textContent = `Click count: ${newClickCount}`;
+                    }
+                });
+        });
     </script>
 </body>
 </html>
