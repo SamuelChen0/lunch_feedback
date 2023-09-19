@@ -29,7 +29,7 @@ The Lunch Feedback WebApp is a Python-based application designed to collect feed
 2. Navigate to the project directory:
    ```sh
    cd lunch_feedback
-   ```
+   ```pip install -r requirements.txt
 
 3. Create a virtual environment and activate it:
    ```sh
