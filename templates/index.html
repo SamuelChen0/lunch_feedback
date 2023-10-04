@@ -5,22 +5,78 @@
 </head>
 <body>
     <h1>Button Click Counter</h1>
-    <p>Click count: {{ click_count }}</p>
-    <button id="clickButton">Click Me</button>
-
+    <p id="clickCount1STAR">Click count: {{ click_count1STAR }}</p>
+    <button id="clickButton1">Click Me</button>
+    <p id="clickCount2STAR">Click count: {{ click_count2STAR }}</p>
+    <button id="clickButton2">Click Me</button>
+    <p id="clickCount3STAR">Click count: {{ click_count3STAR }}</p>
+    <button id="clickButton3">Click Me</button>
+    <p id="clickCount4STAR">Click count: {{ click_count4STAR }}</p>
+    <button id="clickButton4">Click Me</button>
+    <p id="clickCount5STAR">Click count: {{ click_count5STAR }}</p>
+    <button id="clickButton5">Click Me</button>
+    
     <script>
-        document.getElementById('clickButton').addEventListener('click', function() {
-            fetch('/click', { method: 'POST' })
+        document.getElementById('clickButton1').addEventListener('click', function() {
+            fetch('/click1star', { method: 'POST' })
                 .then(response => response.text())
                 .then(data => {
                     if (data === 'success') {
                         // Update the displayed click count
-                        const clickCountElement = document.querySelector('p');
+                        const clickCountElement = document.getElementById('clickCount1STAR');
                         const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
                         clickCountElement.textContent = `Click count: ${newClickCount}`;
                     }
                 });
         });
-    </script>
+        document.getElementById('clickButton2').addEventListener('click', function() {
+            fetch('/click2star', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    if (data === 'success') {
+                        // Update the displayed click count
+                        const clickCountElement = document.getElementById('clickCount2STAR');
+                        const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
+                        clickCountElement.textContent = `Click count: ${newClickCount}`;
+                    }
+                });
+        });
+        document.getElementById('clickButton3').addEventListener('click', function() {
+            fetch('/click3star', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    if (data === 'success') {
+                        // Update the displayed click count
+                        const clickCountElement = document.getElementById('clickCount3STAR');
+                        const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
+                        clickCountElement.textContent = `Click count: ${newClickCount}`;
+                    }
+                });
+        });
+        document.getElementById('clickButton4').addEventListener('click', function() {
+            fetch('/click4star', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    if (data === 'success') {
+                        // Update the displayed click count
+                        const clickCountElement = document.getElementById('clickCount4STAR');
+                        const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
+                        clickCountElement.textContent = `Click count: ${newClickCount}`;
+                    }
+                });
+        });   
+        document.getElementById('clickButton5').addEventListener('click', function() {
+            fetch('/click5star', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    if (data === 'success') {
+                        // Update the displayed click count
+                        const clickCountElement = document.getElementById('clickCount5STAR');
+                        const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
+                        clickCountElement.textContent = `Click count: ${newClickCount}`;
+                    }
+                });
+        });
+</script>
 </body>
 </html>
