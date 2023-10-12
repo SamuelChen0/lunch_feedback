@@ -2,19 +2,65 @@
 <html>
 <head>
     <title>Button Click Counter</title>
+    <style>
+        #red-title {
+            color: red;
+        }
+        .large-text {
+            font-size: 24px;
+        }
+        .button-container {
+            display: flex;
+            gap: 10px; /* Adjust the gap to control the spacing between buttons */
+        }
+        .image-button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            margin-right: 50px; /* Add margin to separate buttons */
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+    <h1 id="red-title">ONE CLICK PER PERSON</h1>
     <h1>Button Click Counter</h1>
-    <p id="clickCount1STAR">Click count: {{ click_count1STAR }}</p>
-    <button id="clickButton1">Click Me</button>
-    <p id="clickCount2STAR">Click count: {{ click_count2STAR }}</p>
-    <button id="clickButton2">Click Me</button>
-    <p id="clickCount3STAR">Click count: {{ click_count3STAR }}</p>
-    <button id="clickButton3">Click Me</button>
-    <p id="clickCount4STAR">Click count: {{ click_count4STAR }}</p>
-    <button id="clickButton4">Click Me</button>
-    <p id="clickCount5STAR">Click count: {{ click_count5STAR }}</p>
-    <button id="clickButton5">Click Me</button>
+    <div class="button-container">
+        <div>
+            <p id="clickCount1STAR">Click count: 0</p>
+            <button id="clickButton1" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;"></i>
+            </button>
+        </div>
+        <div>
+            <p id="clickCount2STAR">Click count: 0</p>
+            <button id="clickButton2" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;"></i>
+            </button>
+        </div>
+        <div>
+            <p id="clickCount3STAR">Click count: 0</p>
+            <button id="clickButton3" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;"></i>
+            </button>
+        </div>
+        <div>
+            <p id="clickCount4STAR">Click count: 0</p>
+            <button id="clickButton4" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;"></i>
+            </button>
+        </div>
+        <div>
+            <p id="clickCount5STAR">Click count: 0</p>
+            <button id="clickButton5" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;"></i>
+            </button>
+        </div>
+    </div>
+</body>
+</html>
+
+
     
     <script>
         document.getElementById('clickButton1').addEventListener('click', function() {
