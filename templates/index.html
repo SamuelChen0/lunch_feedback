@@ -4,6 +4,36 @@
 <head>
     <title>Button Click Counter</title>
     <style>
+        /* Style the close button */
+        /* Style the popup content */
+        .popup-content {
+            background: #f9fec8;
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border: 1px solid #000;
+            position: relative;
+            /* Add this */
+        }
+
+        /* Style the close button */
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+            /* You can adjust the color to your preference */
+        }
+
+        /* On hover, change the color to red */
+        .close-button:hover {
+            color: red;
+        }
+
+
+
         #red-title {
             color: rgb(255, 121, 121);
         }
@@ -68,11 +98,13 @@
 <body>
     <div class="popup" id="popup">
         <div class="popup-content">
+            <span class="close-button" id="closePopup">X</span>
             <p>Your pop-up content here.</p>
             <input type="text" id="popupTextInput" placeholder="Enter your text">
             <button id="submitFeedbackButton">Submit</button>
         </div>
     </div>
+
     <h1 id="red-title">ONE CLICK PER PERSON</h1>
     <h1>Button Click Counter</h1>
     <div class="button-container">
@@ -116,7 +148,7 @@
 <script>
     document.getElementById('clickButton1').addEventListener('click', function () {
         const popup = document.getElementById("popup");
-        submitButton.setAttribute('data-rating',1);
+        submitButton.setAttribute('data-rating', 1);
 
         popup.style.display = "block";
     });
@@ -140,6 +172,23 @@
         submitButton.setAttribute('data-rating', 4);
         popup.style.display = "block";
     });
+
+    // Close the popup when clicking the overlay
+    const overlay = document.getElementById('popup');
+    overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) {
+            overlay.style.display = "none";
+            feedbackInput.value = ''; // Clear the input field
+        }
+    });
+
+    // Close the popup when clicking the close button
+    const closePopupButton = document.getElementById('closePopup');
+    closePopupButton.addEventListener('click', function () {
+        overlay.style.display = "none";
+        feedbackInput.value = ''; // Clear the input field
+    });
+
     const popup = document.getElementById("popup");
     const feedbackInput = document.getElementById('popupTextInput');
     const submitButton = document.getElementById('submitFeedbackButton');
@@ -155,6 +204,7 @@
             .then(() => {
                 console.log('Rating and feedback successfully written to the database');
                 popup.style.display = "none";
+                feedbackInput.value = ''; // Clear the input field
                 // Your existing code to update click count
             })
             .catch((error) => {
