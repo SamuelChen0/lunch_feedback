@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Button Click Counter</title>
     <style>
         #red-title {
             color: rgb(255, 121, 121);
         }
+
         .large-text {
             font-size: 10px;
         }
+
         .button-container {
             display: flex;
-            gap: 10px; /* Adjust the gap to control the spacing between buttons */
+            gap: 10px;
+            /* Adjust the gap to control the spacing between buttons */
         }
+
         .image-button {
             background: transparent;
             border: none;
             cursor: pointer;
-            margin-right: 50px; /* Add margin to separate buttons */
+            margin-right: 50px;
+            /* Add margin to separate buttons */
         }
+
         .popup {
             display: none;
             position: fixed;
@@ -38,14 +45,32 @@
             padding: 20px;
             border: 1px solid #000;
         }
-
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBkRztWoH2RIb9LwMB9yB2yzfFFBVacxag",
+            authDomain: "lunch-feedback.firebaseapp.com",
+            projectId: "lunch-feedback",
+            storageBucket: "lunch-feedback.appspot.com",
+            messagingSenderId: "1030662462935",
+            appId: "1:1030662462935:web:bc1e374f3484d3a0a8bf92",
+            measurementId: "G-JLBS8GVJ5J"
+        };
+
+        firebase.initializeApp(firebaseConfig)
+
+    </script>
 </head>
+
 <body>
     <div class="popup" id="popup">
         <div class="popup-content">
             <p>Your pop-up content here.</p>
+            <input type="text" id="popupTextInput" placeholder="Enter your text">
+            <button id="submitFeedbackButton">Submit</button>
         </div>
     </div>
     <h1 id="red-title">ONE CLICK PER PERSON</h1>
@@ -83,121 +108,67 @@
         </div>
     </div>
 </body>
+
 </html>
 
 
-    
-    <script>
-        document.getElementById('clickButton1').addEventListener('click', function() {
-            fetch('/click1star', { method: 'POST' })
-                .then(response => response.text())
-                .then(data => {
-                    if (data === 'success') {
-                        const popup = document.getElementById("popup");
 
-                        // Show the pop-up
-                        popup.style.display = "block";
+<script>
+    document.getElementById('clickButton1').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating',1);
 
-                        // Set a timeout to hide the pop-up after 1 second
-                        setTimeout(function () {
-                            popup.style.display = "none";
-                        }, 1000);
+        popup.style.display = "block";
+    });
 
-                        // Update the displayed click count
-                        const clickCountElement = document.getElementById('clickCount1STAR');
-                        const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
-                        clickCountElement.textContent = `Click count: ${newClickCount}`;
-                    }
-                });
-        });
-        document.getElementById('clickButton2').addEventListener('click', function() {
-            fetch('/click2star', { method: 'POST' })
-                .then(response => response.text())
-                .then(data => {
-                    if (data === 'success') {
-                        const popup = document.getElementById("popup");
 
-                        // Show the pop-up
-                        popup.style.display = "block";
 
-                        // Set a timeout to hide the pop-up after 1 second
-                        setTimeout(function () {
-                            popup.style.display = "none";
-                        }, 1000);
+    document.getElementById('clickButton2').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 2);
+        popup.style.display = "block";
 
-                        // Update the displayed click count
-                        const clickCountElement = document.getElementById('clickCount2STAR');
-                        const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
-                        clickCountElement.textContent = `Click count: ${newClickCount}`;
-                    }
-                });
-        });
-        document.getElementById('clickButton3').addEventListener('click', function() {
-            fetch('/click3star', { method: 'POST' })
-                .then(response => response.text())
-                .then(data => {
-                    if (data === 'success') {
-                        const popup = document.getElementById("popup");
+    });
+    document.getElementById('clickButton3').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 3);
+        popup.style.display = "block";
 
-                        // Show the pop-up
-                        popup.style.display = "block";
+    });
+    document.getElementById('clickButton4').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 4);
+        popup.style.display = "block";
+    });
+    const popup = document.getElementById("popup");
+    const feedbackInput = document.getElementById('popupTextInput');
+    const submitButton = document.getElementById('submitFeedbackButton');
+    submitButton.addEventListener('click', function () {
+        const rating = parseInt(submitButton.getAttribute('data-rating'));
+        var feedback = feedbackInput.value; // Get feedback comment from input field
 
-                        // Set a timeout to hide the pop-up after 1 second
-                        setTimeout(function () {
-                            popup.style.display = "none";
-                        }, 1000);
+        // Reference to the "feedback" node in the database
+        const feedbackRef = firebase.database().ref('feedback')
 
-                        // Update the displayed click count
-                        const clickCountElement = document.getElementById('clickCount3STAR');
-                        const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
-                        clickCountElement.textContent = `Click count: ${newClickCount}`;
-                    }
-                });
-        });
-        document.getElementById('clickButton4').addEventListener('click', function() {
-            fetch('/click4star', { method: 'POST' })
-                .then(response => response.text())
-                .then(data => {
-                    if (data === 'success') {
-                        const popup = document.getElementById("popup");
+        // Write rating and feedback to the database
+        feedbackRef.push({ rating: rating, feedback: feedback })
+            .then(() => {
+                console.log('Rating and feedback successfully written to the database');
+                popup.style.display = "none";
+                // Your existing code to update click count
+            })
+            .catch((error) => {
+                console.error('Error writing rating and feedback to the database: ', error);
+            });
 
-                        // Show the pop-up
-                        popup.style.display = "block";
+    });
+    document.getElementById('clickButton5').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 5);
+        popup.style.display = "block";
 
-                        // Set a timeout to hide the pop-up after 1 second
-                        setTimeout(function () {
-                            popup.style.display = "none";
-                        }, 1000);
-
-                        // Update the displayed click count
-                        const clickCountElement = document.getElementById('clickCount4STAR');
-                        const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
-                        clickCountElement.textContent = `Click count: ${newClickCount}`;
-                    }
-                });
-        });   
-        document.getElementById('clickButton5').addEventListener('click', function() {
-            fetch('/click5star', { method: 'POST' })
-                .then(response => response.text())
-                .then(data => {
-                    if (data === 'success') {
-                        const popup = document.getElementById("popup");
-
-                        // Show the pop-up
-                        popup.style.display = "block";
-
-                        // Set a timeout to hide the pop-up after 1 second
-                        setTimeout(function () {
-                            popup.style.display = "none";
-                        }, 1000);
-
-                        // Update the displayed click count
-                        const clickCountElement = document.getElementById('clickCount5STAR');
-                        const newClickCount = parseInt(clickCountElement.textContent.split(' ')[2]) + 1;
-                        clickCountElement.textContent = `Click count: ${newClickCount}`;
-                    }
-                });
-        });
+    });
 </script>
 </body>
+
 </html>
