@@ -21,7 +21,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            font-size: 20px;
+            font-size: 25px;
             cursor: pointer;
             color: #333;
             /* You can adjust the color to your preference */
@@ -39,7 +39,7 @@
         }
 
         .large-text {
-            font-size: 10px;
+            font-size: 20px;
         }
 
         .button-container {
@@ -75,6 +75,9 @@
             padding: 20px;
             border: 1px solid #000;
         }
+        .click_size{
+            font-size: 40px;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -109,33 +112,33 @@
     <h1>Button Click Counter</h1>
     <div class="button-container">
         <div>
-            <p id="clickCount1STAR">Click count: 0</p>
+            <p class= "click_size"id="clickCount1STAR">Trash</p>
             <button id="clickButton1" class="image-button">
-                <i class="fa fa-star fa-2x" style="color: gold;"></i>
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
         <div>
-            <p id="clickCount2STAR">Click count: 0</p>
+            <p class= "click_size"id="clickCount2STAR">Bad</p>
             <button id="clickButton2" class="image-button">
-                <i class="fa fa-star fa-2x" style="color: gold;"></i>
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
         <div>
-            <p id="clickCount3STAR">Click count: 0</p>
+            <p class= "click_size"id="clickCount3STAR">SoSo</p>
             <button id="clickButton3" class="image-button">
-                <i class="fa fa-star fa-2x" style="color: gold;"></i>
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
         <div>
-            <p id="clickCount4STAR">Click count: 0</p>
+            <p class= "click_size"id="clickCount4STAR">Good</p>
             <button id="clickButton4" class="image-button">
-                <i class="fa fa-star fa-2x" style="color: gold;"></i>
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
         <div>
-            <p id="clickCount5STAR">Click count: 0</p>
+            <p class= "click_size"id="clickCount5STAR">Excellent</p>
             <button id="clickButton5" class="image-button">
-                <i class="fa fa-star fa-2x" style="color: gold;"></i>
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
     </div>
@@ -146,10 +149,10 @@
 
 
 <script>
+
     document.getElementById('clickButton1').addEventListener('click', function () {
         const popup = document.getElementById("popup");
         submitButton.setAttribute('data-rating', 1);
-
         popup.style.display = "block";
     });
 
