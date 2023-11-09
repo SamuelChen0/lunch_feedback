@@ -7,7 +7,9 @@
         /* Style the close button */
         /* Style the popup content */
         .popup-content {
-            background: #f9fec8;
+            background: linear-gradient(to bottom, #ffcc00 0%, #ff9966 100%);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             width: 300px;
             margin: 100px auto;
             padding: 20px;
@@ -26,13 +28,12 @@
             color: #333;
             /* You can adjust the color to your preference */
         }
+        
 
         /* On hover, change the color to red */
         .close-button:hover {
             color: red;
         }
-
-
 
         #red-title {
             color: rgb(255, 121, 121);
@@ -44,6 +45,7 @@
 
         .button-container {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             /* Adjust the gap to control the spacing between buttons */
         }
@@ -53,6 +55,7 @@
             border: none;
             cursor: pointer;
             margin-right: 50px;
+            
             /* Add margin to separate buttons */
         }
 
@@ -101,10 +104,11 @@
 </head>
 
 <body>
+    
     <div class="popup" id="popup">
         <div class="popup-content">
             <span class="close-button" id="closePopup">X</span>
-            <p>Your pop-up content here.</p>
+            <h3>Feedback and Suggestion (optional)</h3>
             <input type="text" id="popupTextInput" placeholder="Enter your text">
             <button id="submitFeedbackButton">Submit</button>
         </div>
@@ -112,7 +116,6 @@
 
     <h1 id="red-title">ONE CLICK PER PERSON</h1>
     <h1>Button Click Counter</h1>
-   
     <div class="button-container">
         <div>
             <p class= "click_size"id="clickCount1STAR">Trash</p>
@@ -145,6 +148,13 @@
             </button>
         </div>
     </div>
+    <!-- <img src="https://media2.giphy.com/media/a5viI92PAF89q/200w.gif?cid=6c09b952kiuxs4jgkbxxy4v7pjhavr0l2cmpsfxgcmvyzrci&ep=v1_gifs_search&rid=200w.gif&ct=g" > -->
+    <!-- <img src="https://media1.giphy.com/media/A5ugHVbuFL3uo/200w.gif?cid=6c09b952cc2tbgf6hciig4dbpeg73xgq5npjr7hdigkfcrko&ep=v1_gifs_search&rid=200w.gif&ct=g" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
+    <!-- <img src="https://i.pinimg.com/originals/79/3e/f5/793ef581042c309cbb3d8ef41b5e9a16.gif" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
+    <!-- <img src="https://static.wixstatic.com/media/2c4bb8_d5088ac72fc64b6e967d5ede6c912128~mv2.jpg/v1/fill/w_1224,h_865,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/112%E5%B9%B411%E6%9C%88%E4%BB%BD%20Lunch%20Menu.jpg" style = "float: middle;"> -->
+    
+    <!-- <img scr="NovemberLunchMenu_pages-to-jpg-0001.jpg" style = "float: middle"> -->
+    <img src="/static/nov.jpg" style="width: 50%; height: 55%; float: right; margin-top: -300px;">
 </body>
 
 </html>
