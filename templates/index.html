@@ -12,7 +12,9 @@
             padding: 0;
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             font-family: 'Roboto', sans-serif;
             font-weight: bold;
             text-align: center;
@@ -30,7 +32,13 @@
             text-align: center;
         }
 
-      
+        img {
+            display: block;
+            margin: 0 auto;
+            width: 50%;
+            height: 55%;
+            margin-top: 30px;
+        }
 
         .popup-content {
             background: #ffffff;
@@ -52,6 +60,11 @@
         .popup-content button {
             width: 100%;
             margin-bottom: 20px;
+        }
+
+        .popup-content {
+            /* your existing styles */
+            position: relative;
         }
 
         .close-button {
@@ -132,7 +145,7 @@
 </head>
 
 <body>
-    
+
     <div class="popup" id="popup">
         <div class="popup-content">
             <span class="close-button" id="closePopup">X</span>
@@ -143,35 +156,35 @@
     </div>
 
     <h1 id="red-title">ONE CLICK PER PERSON</h1>
-    <img src="menu.jpg" alt="hello">
+
     <h1>Button Click Counter</h1>
     <div class="button-container">
         <div>
-            <p class= "click_size"id="clickCount1STAR">Trash</p>
+            <p class="click_size" id="clickCount1STAR">Trash</p>
             <button id="clickButton1" class="image-button">
                 <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
         <div>
-            <p class= "click_size"id="clickCount2STAR">Bad</p>
+            <p class="click_size" id="clickCount2STAR">Bad</p>
             <button id="clickButton2" class="image-button">
                 <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
         <div>
-            <p class= "click_size"id="clickCount3STAR">SoSo</p>
+            <p class="click_size" id="clickCount3STAR">SoSo</p>
             <button id="clickButton3" class="image-button">
                 <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
         <div>
-            <p class= "click_size"id="clickCount4STAR">Good</p>
+            <p class="click_size" id="clickCount4STAR">Good</p>
             <button id="clickButton4" class="image-button">
                 <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
         <div>
-            <p class= "click_size"id="clickCount5STAR">Excellent</p>
+            <p class="click_size" id="clickCount5STAR">Excellent</p>
             <button id="clickButton5" class="image-button">
                 <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
@@ -181,9 +194,9 @@
     <!-- <img src="https://media1.giphy.com/media/A5ugHVbuFL3uo/200w.gif?cid=6c09b952cc2tbgf6hciig4dbpeg73xgq5npjr7hdigkfcrko&ep=v1_gifs_search&rid=200w.gif&ct=g" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
     <!-- <img src="https://i.pinimg.com/originals/79/3e/f5/793ef581042c309cbb3d8ef41b5e9a16.gif" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
     <!-- <img src="https://static.wixstatic.com/media/2c4bb8_d5088ac72fc64b6e967d5ede6c912128~mv2.jpg/v1/fill/w_1224,h_865,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/112%E5%B9%B411%E6%9C%88%E4%BB%BD%20Lunch%20Menu.jpg" style = "float: middle;"> -->
-    
+
     <!-- <img scr="NovemberLunchMenu_pages-to-jpg-0001.jpg" style = "float: middle"> -->
-    <img src="/static/nov.jpg" style="width: 50%; height: 55%; float: right; margin-top: -300px;">
+    <img src="/static/nov.jpg" alt="November Image">
 </body>
 
 </html>
