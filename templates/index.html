@@ -4,59 +4,18 @@
 <head>
     <title>Button Click Counter</title>
     <style>
-        /* Style the close button */
-        /* Style the popup content */
-        .popup-content {
-            background: linear-gradient(to bottom, #ffcc00 0%, #ff9966 100%);
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            width: 300px;
-            margin: 100px auto;
-            padding: 20px;
-            border: 1px solid #000;
-            position: relative;
-            /* Add this */
-        }
-
-        /* Style the close button */
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 25px;
-            cursor: pointer;
+        body {
+            font-family: 'Arial', sans-serif;
             color: #333;
-            /* You can adjust the color to your preference */
-        }
-        
-
-        /* On hover, change the color to red */
-        .close-button:hover {
-            color: red;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
         }
 
-        #red-title {
-            color: rgb(255, 121, 121);
-        }
-
-        .large-text {
-            font-size: 20px;
-        }
-
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            /* Adjust the gap to control the spacing between buttons */
-        }
-
-        .image-button {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            margin-right: 50px;
-            
-            /* Add margin to separate buttons */
+        h1, h2, h3 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+            text-align: center;
         }
 
         .popup {
@@ -74,14 +33,83 @@
       
 
         .popup-content {
-            background: #f9fec8;
-            width: 300px;
+            background: #ffffff;
+            width: 80%;
+            max-width: 400px;
             margin: 100px auto;
-            padding: 20px;
-            border: 1px solid #000;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease-in-out;
         }
-        .click_size{
-            font-size: 40px;
+
+        .popup-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .popup-content input[type="text"],
+        .popup-content button {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .close-button {
+            font-size: 28px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: red;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .image-button {
+            background: linear-gradient(to bottom, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 15px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .image-button:hover {
+            transform: scale(1.1);
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .click_size:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -108,13 +136,14 @@
     <div class="popup" id="popup">
         <div class="popup-content">
             <span class="close-button" id="closePopup">X</span>
-            <h3>Feedback and Suggestion (optional)</h3>
+            <p>Suggestion/Complain (optional)</p>
             <input type="text" id="popupTextInput" placeholder="Enter your text">
             <button id="submitFeedbackButton">Submit</button>
         </div>
     </div>
 
     <h1 id="red-title">ONE CLICK PER PERSON</h1>
+    <img src="menu.jpg" alt="hello">
     <h1>Button Click Counter</h1>
     <div class="button-container">
         <div>
