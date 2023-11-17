@@ -2,7 +2,8 @@
 <html>
 
 <head>
-    <title>Button Click Counter</title>
+
+    <title>HAS Lunch Feedback</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -149,6 +150,38 @@
             color: rgb(5, 5, 5);
         }
 
+        #submitWithoutFeedbackButton {
+            background-color: #008CBA;
+            /* Blue background */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #submitWithoutFeedbackButton:hover {
+            background-color: #007B9E;
+            /* Darker blue on hover */
+        }
+        #submitFeedbackButton {
+            background-color: #008CBA;
+            /* Blue background */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #submitFeedbackButton:hover {
+            background-color: #007B9E;
+            /* Darker blue on hover */
+        }
+
+
         .click_size:hover {
             transform: scale(1.1);
             transition: transform 0.3s ease;
@@ -171,9 +204,11 @@
         firebase.initializeApp(firebaseConfig)
 
     </script>
+
 </head>
 
 <body>
+
 
     <div class="popup" id="popup">
         <div class="popup-content">
@@ -181,15 +216,17 @@
             <p>Suggestion/Complain (optional)</p>
             <input type="text" id="popupTextInput" placeholder="Enter your text">
             <button id="submitFeedbackButton">Submit</button>
+            <button id="submitWithoutFeedbackButton">Submit without Feedback</button>
+
         </div>
     </div>
 
     <h1 id="red-title">ONE CLICK PER PERSON</h1>
 
-    <h1>Button Click Counter</h1>
+    <h1>HAS Lunch Feedback</h1>
     <div class="button-container">
         <div>
-            <p class="click_size">Trash</p>
+            <p class="click_size" id="clickCount1STAR">Very bad</p>
             <button id="clickButton1" class="image-button">
                 <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
@@ -227,6 +264,7 @@
 
     <!-- <img scr="NovemberLunchMenu_pages-to-jpg-0001.jpg" style = "float: middle"> -->
     <img src="/static/nov.jpg" alt="November Image">
+
 </body>
 
 </html>
@@ -234,6 +272,7 @@
 
 
 <script>
+
 
     document.getElementById('clickButton1').addEventListener('click', function () {
         const popup = document.getElementById("popup");
@@ -280,6 +319,30 @@
     const popup = document.getElementById("popup");
     const feedbackInput = document.getElementById('popupTextInput');
     const submitButton = document.getElementById('submitFeedbackButton');
+    
+
+    // Event listener for the new "Submit without Feedback" button
+    document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
+        const rating = parseInt(submitButton.getAttribute('data-rating'));
+
+        // Reference to the "feedback" node in the database
+        const feedbackRef = firebase.database().ref('feedback')
+
+        // Write only rating to the database
+        feedbackRef.push({ rating: rating })
+            .then(() => {
+                console.log('Rating successfully written to the database');
+                popup.style.display = "none";
+                feedbackInput.value = ''; // Clear the input field
+                // Update click count or other UI elements as necessary
+            })
+            .catch((error) => {
+                console.error('Error writing rating to the database: ', error);
+            });
+    });
+
+
+
     submitButton.addEventListener('click', function () {
         const rating = parseInt(submitButton.getAttribute('data-rating'));
         var feedback = feedbackInput.value; // Get feedback comment from input field
@@ -306,6 +369,7 @@
         popup.style.display = "block";
 
     });
+
 </script>
 </body>
 
