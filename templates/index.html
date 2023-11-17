@@ -2,234 +2,234 @@
 <html>
 
 <head>
-<title>Button Click Counter</title>
-<style>
-body {
-font-family: 'Arial', sans-serif;
-color: white;
-/* Set the text color to white */
-margin: 0;
-padding: 0;
-text-align: center;
-}
+    <title>Button Click Counter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: white;
+            /* Set the text color to white */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
 
-body::before {
-content: "";
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: url('static/Good_Food_Display_-_NCI_Visuals_Online.jpg') no-repeat center center fixed;
-background-size: cover;
-z-index: -1;
-opacity: 0.43;
-/* Adjust the opacity value as needed */
-}
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('static/Good_Food_Display_-_NCI_Visuals_Online.jpg') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -1;
+            opacity: 0.43;
+            /* Adjust the opacity value as needed */
+        }
 
-h1,
-h2,
-h3 {
-font-family: 'Roboto', sans-serif;
-font-weight: bold;
-text-align: center;
-color: rgb(5, 5, 5);
-/* Set the text color to white */
-}
+        h1,
+        h2,
+        h3 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+            text-align: center;
+            color: rgb(5, 5, 5);
+            /* Set the text color to white */
+        }
 
-.popup {
-display: none;
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background: rgba(0, 0, 0, 0.5);
-z-index: 9999;
-text-align: center;
-}
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            text-align: center;
+        }
 
-img {
-display: block;
-margin: 0 auto;
-width: 50%;
-height: 55%;
-margin-top: 30px;
-}
+        img {
+            display: block;
+            margin: 0 auto;
+            width: 50%;
+            height: 55%;
+            margin-top: 30px;
+        }
 
-.popup-content {
-background: #ffffff;
-width: 80%;
-max-width: 400px;
-margin: 100px auto;
-padding: 40px;
-border-radius: 10px;
-box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
-animation: fadeIn 0.3s ease-in-out;
-}
+        .popup-content {
+            background: #ffffff;
+            width: 80%;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease-in-out;
+        }
 
-.popup-content p {
-font-size: 18px;
-margin-bottom: 20px;
-color: black;
-/* Set the text color to black */
-}
+        .popup-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: black;
+            /* Set the text color to black */
+        }
 
-.popup-content input[type="text"],
-.popup-content button {
-width: 100%;
-margin-bottom: 20px;
-}
+        .popup-content input[type="text"],
+        .popup-content button {
+            width: 100%;
+            margin-bottom: 20px;
+        }
 
-.popup-content {
-/* your existing styles */
-position: relative;
-}
+        .popup-content {
+            /* your existing styles */
+            position: relative;
+        }
 
-.close-button {
-font-size: 28px;
-position: absolute;
-top: 10px;
-right: 10px;
-cursor: pointer;
-color: rgb(0, 0, 0);
-/* Set the text color to white */
-}
+        .close-button {
+            font-size: 28px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: rgb(0, 0, 0);
+            /* Set the text color to white */
+        }
 
-.close-button:hover {
-color: red;
-}
+        .close-button:hover {
+            color: red;
+        }
 
-@keyframes fadeIn {
-from {
-opacity: 0;
-transform: translateY(-20px);
-}
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
 
-to {
-opacity: 1;
-transform: translateY(0);
-}
-}
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.button-container {
-display: flex;
-gap: 10px;
-justify-content: center;
-margin-top: 20px;
-}
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
 
-.image-button {
-background: linear-gradient(to bottom, #4CAF50, #45a049);
-color: white;
-border: none;
-cursor: pointer;
-padding: 15px 20px;
-border-radius: 5px;
-transition: all 0.3s ease;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        .image-button {
+            background: linear-gradient(to bottom, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 15px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.image-button:hover {
-transform: scale(1.1);
-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
+        .image-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
 
-input[type="text"] {
-padding: 10px;
-border-radius: 5px;
-border: 1px solid #000000;
-width: 100%;
-margin-bottom: 10px;
-}
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #000000;
+            width: 100%;
+            margin-bottom: 10px;
+        }
 
-.click_size {
-font-size: 30px;
-/* Adjust the size as needed */
-color: rgb(5, 5, 5);
-}
+        .click_size {
+            font-size: 30px;
+            /* Adjust the size as needed */
+            color: rgb(5, 5, 5);
+        }
 
-.click_size:hover {
-transform: scale(1.1);
-transition: transform 0.3s ease;
-}
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-<script>
-const firebaseConfig = {
-apiKey: "AIzaSyBkRztWoH2RIb9LwMB9yB2yzfFFBVacxag",
-authDomain: "lunch-feedback.firebaseapp.com",
-projectId: "lunch-feedback",
-storageBucket: "lunch-feedback.appspot.com",
-messagingSenderId: "1030662462935",
-appId: "1:1030662462935:web:bc1e374f3484d3a0a8bf92",
-measurementId: "G-JLBS8GVJ5J"
-};
+        .click_size:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBkRztWoH2RIb9LwMB9yB2yzfFFBVacxag",
+            authDomain: "lunch-feedback.firebaseapp.com",
+            projectId: "lunch-feedback",
+            storageBucket: "lunch-feedback.appspot.com",
+            messagingSenderId: "1030662462935",
+            appId: "1:1030662462935:web:bc1e374f3484d3a0a8bf92",
+            measurementId: "G-JLBS8GVJ5J"
+        };
 
-firebase.initializeApp(firebaseConfig)
+        firebase.initializeApp(firebaseConfig)
 
-</script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 </head>
 
 <body>
 
-<div class="popup" id="popup">
-<div class="popup-content">
-<span class="close-button" id="closePopup">X</span>
-<p id="selectedRating"></p> <!-- Place to display the selected rating -->
-<p>Suggestion/Complain (optional)</p>
-<input type="text" id="popupTextInput" placeholder="Enter your text">
-<button id="submitFeedbackButton">Submit</button>
-</div>
-</div>
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close-button" id="closePopup">X</span>
+            <p id="selectedRating"></p> <!-- Place to display the selected rating -->
+            <p>Suggestion/Complain (optional)</p>
+            <input type="text" id="popupTextInput" placeholder="Enter your text">
+            <button id="submitFeedbackButton">Submit</button>
+        </div>
+    </div>
 
-<h1 id="red-title">ONE CLICK PER PERSON</h1>
+    <h1 id="red-title">ONE CLICK PER PERSON</h1>
 
-<h1>Button Click Counter</h1>
-<div class="button-container">
-<div>
-<p class="click_size" id="clickCount1STAR">Trash</p>
-<button id="clickButton1" class="image-button">
-<i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
-</button>
-</div>
-<div>
-<p class="click_size" id="clickCount2STAR">Bad</p>
-<button id="clickButton2" class="image-button">
-<i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
-</button>
-</div>
-<div>
-<p class="click_size" id="clickCount3STAR">SoSo</p>
-<button id="clickButton3" class="image-button">
-<i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
-</button>
-</div>
-<div>
-<p class="click_size" id="clickCount4STAR">Good</p>
-<button id="clickButton4" class="image-button">
-<i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
-</button>
-</div>
-<div>
-<p class="click_size" id="clickCount4STAR">Excellent</p>
-<button id="clickButton5" class="image-button">
-<i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
-</button>
-</div>
-</div>
+    <h1>Button Click Counter</h1>
+    <div class="button-container">
+        <div>
+            <p class="click_size" id="clickCount1STAR">Trash</p>
+            <button id="clickButton1" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
+            </button>
+        </div>
+        <div>
+            <p class="click_size" id="clickCount2STAR">Bad</p>
+            <button id="clickButton2" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
+            </button>
+        </div>
+        <div>
+            <p class="click_size" id="clickCount3STAR">SoSo</p>
+            <button id="clickButton3" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
+            </button>
+        </div>
+        <div>
+            <p class="click_size" id="clickCount4STAR">Good</p>
+            <button id="clickButton4" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
+            </button>
+        </div>
+        <div>
+            <p class="click_size" id="clickCount4STAR">Excellent</p>
+            <button id="clickButton5" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
+            </button>
+        </div>
+    </div>
 
-<!-- <img src="https://media2.giphy.com/media/a5viI92PAF89q/200w.gif?cid=6c09b952kiuxs4jgkbxxy4v7pjhavr0l2cmpsfxgcmvyzrci&ep=v1_gifs_search&rid=200w.gif&ct=g" > -->
-<!-- <img src="https://media1.giphy.com/media/A5ugHVbuFL3uo/200w.gif?cid=6c09b952cc2tbgf6hciig4dbpeg73xgq5npjr7hdigkfcrko&ep=v1_gifs_search&rid=200w.gif&ct=g" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
-<!-- <img src="https://i.pinimg.com/originals/79/3e/f5/793ef581042c309cbb3d8ef41b5e9a16.gif" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
-<!-- <img src="https://static.wixstatic.com/media/2c4bb8_d5088ac72fc64b6e967d5ede6c912128~mv2.jpg/v1/fill/w_1224,h_865,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/112%E5%B9%B411%E6%9C%88%E4%BB%BD%20Lunch%20Menu.jpg" style = "float: middle;"> -->
+    <!-- <img src="https://media2.giphy.com/media/a5viI92PAF89q/200w.gif?cid=6c09b952kiuxs4jgkbxxy4v7pjhavr0l2cmpsfxgcmvyzrci&ep=v1_gifs_search&rid=200w.gif&ct=g" > -->
+    <!-- <img src="https://media1.giphy.com/media/A5ugHVbuFL3uo/200w.gif?cid=6c09b952cc2tbgf6hciig4dbpeg73xgq5npjr7hdigkfcrko&ep=v1_gifs_search&rid=200w.gif&ct=g" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
+    <!-- <img src="https://i.pinimg.com/originals/79/3e/f5/793ef581042c309cbb3d8ef41b5e9a16.gif" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
+    <!-- <img src="https://static.wixstatic.com/media/2c4bb8_d5088ac72fc64b6e967d5ede6c912128~mv2.jpg/v1/fill/w_1224,h_865,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/112%E5%B9%B411%E6%9C%88%E4%BB%BD%20Lunch%20Menu.jpg" style = "float: middle;"> -->
 
-<!-- <img scr="NovemberLunchMenu_pages-to-jpg-0001.jpg" style = "float: middle"> -->
-<img src="/static/nov.jpg" alt="November Image">
+    <!-- <img scr="NovemberLunchMenu_pages-to-jpg-0001.jpg" style = "float: middle"> -->
+    <img src="/static/nov.jpg" alt="November Image">
 </body>
 
 </html>
@@ -238,108 +238,108 @@ firebase.initializeApp(firebaseConfig)
 
 <script>
 
-document.getElementById('clickButton1').addEventListener('click', function () {
-const popup = document.getElementById("popup");
-submitButton.setAttribute('data-rating', 1);
-popup.style.display = "block";
-});
+    document.getElementById('clickButton1').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 1);
+        popup.style.display = "block";
+    });
 
 
 
-document.getElementById('clickButton2').addEventListener('click', function () {
-const popup = document.getElementById("popup");
-submitButton.setAttribute('data-rating', 2);
-popup.style.display = "block";
+    document.getElementById('clickButton2').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 2);
+        popup.style.display = "block";
 
-});
-document.getElementById('clickButton3').addEventListener('click', function () {
-const popup = document.getElementById("popup");
-submitButton.setAttribute('data-rating', 3);
-popup.style.display = "block";
+    });
+    document.getElementById('clickButton3').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 3);
+        popup.style.display = "block";
 
-});
-document.getElementById('clickButton4').addEventListener('click', function () {
-const popup = document.getElementById("popup");
-submitButton.setAttribute('data-rating', 4);
-popup.style.display = "block";
-});
+    });
+    document.getElementById('clickButton4').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 4);
+        popup.style.display = "block";
+    });
 
-// Close the popup when clicking the overlay
-const overlay = document.getElementById('popup');
-overlay.addEventListener('click', function (e) {
-if (e.target === overlay) {
-overlay.style.display = "none";
-feedbackInput.value = ''; // Clear the input field
-}
-});
+    // Close the popup when clicking the overlay
+    const overlay = document.getElementById('popup');
+    overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) {
+            overlay.style.display = "none";
+            feedbackInput.value = ''; // Clear the input field
+        }
+    });
 
-// Close the popup when clicking the close button
-const closePopupButton = document.getElementById('closePopup');
-closePopupButton.addEventListener('click', function () {
-overlay.style.display = "none";
-feedbackInput.value = ''; // Clear the input field
-});
+    // Close the popup when clicking the close button
+    const closePopupButton = document.getElementById('closePopup');
+    closePopupButton.addEventListener('click', function () {
+        overlay.style.display = "none";
+        feedbackInput.value = ''; // Clear the input field
+    });
 
-const popup = document.getElementById("popup");
-const feedbackInput = document.getElementById('popupTextInput');
-const submitButton = document.getElementById('submitFeedbackButton');
-submitButton.addEventListener('click', function () {
-const rating = parseInt(submitButton.getAttribute('data-rating'));
-var feedback = feedbackInput.value; // Get feedback comment from input field
+    const popup = document.getElementById("popup");
+    const feedbackInput = document.getElementById('popupTextInput');
+    const submitButton = document.getElementById('submitFeedbackButton');
+    submitButton.addEventListener('click', function () {
+        const rating = parseInt(submitButton.getAttribute('data-rating'));
+        var feedback = feedbackInput.value; // Get feedback comment from input field
 
-// Reference to the "feedback" node in the database
-const feedbackRef = firebase.database().ref('feedback')
+        // Reference to the "feedback" node in the database
+        const feedbackRef = firebase.database().ref('feedback')
 
-// Write rating and feedback to the database
-feedbackRef.push({ rating: rating, feedback: feedback })
-.then(() => {
-console.log('Rating and feedback successfully written to the database');
-popup.style.display = "none";
-feedbackInput.value = ''; // Clear the input field
-// Your existing code to update click count
-})
-.catch((error) => {
-console.error('Error writing rating and feedback to the database: ', error);
-});
+        // Write rating and feedback to the database
+        feedbackRef.push({ rating: rating, feedback: feedback })
+            .then(() => {
+                console.log('Rating and feedback successfully written to the database');
+                popup.style.display = "none";
+                feedbackInput.value = ''; // Clear the input field
+                // Your existing code to update click count
+            })
+            .catch((error) => {
+                console.error('Error writing rating and feedback to the database: ', error);
+            });
 
-});
-document.getElementById('clickButton5').addEventListener('click', function () {
-const popup = document.getElementById("popup");
-submitButton.setAttribute('data-rating', 5);
-popup.style.display = "block";
+    });
+    document.getElementById('clickButton5').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 5);
+        popup.style.display = "block";
 
-});
-function displayRating(rating) {
-const popup = document.getElementById("popup");
-const ratingDisplay = document.getElementById("selectedRating");
-let stars = "";
-for (let i = 0; i < rating; i++) {
-stars += "<i class='fa fa-star' style='color: gold;'></i>"; // Add a star for each point in the rating
-}
-ratingDisplay.innerHTML = "Rating: " + stars; // Update the rating display with stars
-submitButton.setAttribute('data-rating', rating);
-popup.style.display = "block";
-}
+    });
+    function displayRating(rating) {
+        const popup = document.getElementById("popup");
+        const ratingDisplay = document.getElementById("selectedRating");
+        let stars = "";
+        for (let i = 0; i < rating; i++) {
+            stars += "<i class='fa fa-star' style='color: gold;'></i>"; // Add a star for each point in the rating
+        }
+        ratingDisplay.innerHTML = "Rating: " + stars; // Update the rating display with stars
+        submitButton.setAttribute('data-rating', rating);
+        popup.style.display = "block";
+    }
 
-document.getElementById('clickButton1').addEventListener('click', function () {
-displayRating(1);
-});
+    document.getElementById('clickButton1').addEventListener('click', function () {
+        displayRating(1);
+    });
 
-document.getElementById('clickButton2').addEventListener('click', function () {
-displayRating(2);
-});
+    document.getElementById('clickButton2').addEventListener('click', function () {
+        displayRating(2);
+    });
 
-document.getElementById('clickButton3').addEventListener('click', function () {
-displayRating(3);
-});
+    document.getElementById('clickButton3').addEventListener('click', function () {
+        displayRating(3);
+    });
 
-document.getElementById('clickButton4').addEventListener('click', function () {
-displayRating(4);
-});
+    document.getElementById('clickButton4').addEventListener('click', function () {
+        displayRating(4);
+    });
 
-document.getElementById('clickButton5').addEventListener('click', function () {
-displayRating(5);
-});
+    document.getElementById('clickButton5').addEventListener('click', function () {
+        displayRating(5);
+    });
 
 
 </script>
