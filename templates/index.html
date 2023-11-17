@@ -209,6 +209,11 @@
 </head>
 
 <body>
+    <div class="popup" id="successPopup">
+        <div class="popup-content">
+            <p>Your response has been recorded successfully!</p>
+        </div>
+    </div>
 
     <div class="popup" id="popup">
         <div class="popup-content">
@@ -334,6 +339,7 @@
                 console.log('Rating successfully written to the database');
                 popup.style.display = "none";
                 feedbackInput.value = ''; // Clear the input field
+                showSuccessPopupAndCloseAfterTwoSeconds();
                 // Update click count or other UI elements as necessary
             })
             .catch((error) => {
@@ -356,6 +362,7 @@
                 console.log('Rating and feedback successfully written to the database');
                 popup.style.display = "none";
                 feedbackInput.value = ''; // Clear the input field
+                showSuccessPopupAndCloseAfterTwoSeconds();
                 // Your existing code to update click count
             })
             .catch((error) => {
@@ -363,6 +370,15 @@
             });
 
     });
+    function showSuccessPopupAndCloseAfterTwoSeconds() {
+        const successPopup = document.getElementById("successPopup");
+        successPopup.style.display = "block";
+
+        // Close the success popup after two seconds
+        setTimeout(function () {
+            successPopup.style.display = "none";
+        }, 2000); // 2000 milliseconds (2 seconds)
+    }
     document.getElementById('clickButton5').addEventListener('click', function () {
         const popup = document.getElementById("popup");
         submitButton.setAttribute('data-rating', 5);
