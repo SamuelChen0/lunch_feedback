@@ -165,6 +165,7 @@
             background-color: #007B9E;
             /* Darker blue on hover */
         }
+
         #submitFeedbackButton {
             background-color: #008CBA;
             /* Blue background */
@@ -204,20 +205,19 @@
         firebase.initializeApp(firebaseConfig)
 
     </script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
 
-
     <div class="popup" id="popup">
         <div class="popup-content">
             <span class="close-button" id="closePopup">X</span>
+            <p id="selectedRating"></p> <!-- Place to display the selected rating -->
             <p>Suggestion/Complain (optional)</p>
             <input type="text" id="popupTextInput" placeholder="Enter your text">
             <button id="submitFeedbackButton">Submit</button>
             <button id="submitWithoutFeedbackButton">Submit without Feedback</button>
-
         </div>
     </div>
 
@@ -319,7 +319,7 @@
     const popup = document.getElementById("popup");
     const feedbackInput = document.getElementById('popupTextInput');
     const submitButton = document.getElementById('submitFeedbackButton');
-    
+
 
     // Event listener for the new "Submit without Feedback" button
     document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
@@ -369,6 +369,41 @@
         popup.style.display = "block";
 
     });
+
+
+    function displayRating(rating) {
+        const popup = document.getElementById("popup");
+        const ratingDisplay = document.getElementById("selectedRating");
+        let stars = "";
+        for (let i = 0; i < rating; i++) {
+            stars += "<i class='fa fa-star' style='color: gold;'></i>"; // Add a star for each point in the rating
+        }
+        ratingDisplay.innerHTML = "Rating: " + stars; // Update the rating display with stars
+        submitButton.setAttribute('data-rating', rating);
+        popup.style.display = "block";
+    }
+
+    document.getElementById('clickButton1').addEventListener('click', function () {
+        displayRating(1);
+    });
+
+    document.getElementById('clickButton2').addEventListener('click', function () {
+        displayRating(2);
+    });
+
+    document.getElementById('clickButton3').addEventListener('click', function () {
+        displayRating(3);
+    });
+
+    document.getElementById('clickButton4').addEventListener('click', function () {
+        displayRating(4);
+    });
+
+    document.getElementById('clickButton5').addEventListener('click', function () {
+        displayRating(5);
+    });
+
+
 
 </script>
 </body>
