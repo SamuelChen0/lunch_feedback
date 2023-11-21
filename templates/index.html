@@ -330,11 +330,14 @@
     document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
         const rating = parseInt(submitButton.getAttribute('data-rating'));
 
+        // Get the current date
+        const currentDate = new Date().toISOString();
+
         // Reference to the "feedback" node in the database
         const feedbackRef = firebase.database().ref('feedback')
 
-        // Write only rating to the database
-        feedbackRef.push({ rating: rating })
+        // Write only rating and date to the database
+        feedbackRef.push({ rating: rating, date: currentDate })
             .then(() => {
                 console.log('Rating successfully written to the database');
                 popup.style.display = "none";
@@ -347,17 +350,20 @@
             });
     });
 
-
+    // ...
 
     submitButton.addEventListener('click', function () {
         const rating = parseInt(submitButton.getAttribute('data-rating'));
         var feedback = feedbackInput.value; // Get feedback comment from input field
 
+        // Get the current date
+        const currentDate = new Date().toISOString();
+
         // Reference to the "feedback" node in the database
         const feedbackRef = firebase.database().ref('feedback')
 
-        // Write rating and feedback to the database
-        feedbackRef.push({ rating: rating, feedback: feedback })
+        // Write rating, feedback, and date to the database
+        feedbackRef.push({ rating: rating, feedback: feedback, date: currentDate })
             .then(() => {
                 console.log('Rating and feedback successfully written to the database');
                 popup.style.display = "none";
@@ -368,7 +374,6 @@
             .catch((error) => {
                 console.error('Error writing rating and feedback to the database: ', error);
             });
-
     });
     function showSuccessPopupAndCloseAfterTwoSeconds() {
         const successPopup = document.getElementById("successPopup");
