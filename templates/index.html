@@ -209,6 +209,11 @@
 </head>
 
 <body>
+    <div id="barcode-scanner">
+        <div id="interactive" class="viewport"></div>
+        <button id="start-scanner">Scan Barcode</button>
+    </div>
+
     <div class="popup" id="successPopup">
         <div class="popup-content">
             <p>Your response has been recorded successfully!</p>
@@ -225,6 +230,8 @@
             <button id="submitWithoutFeedbackButton">Submit without Feedback</button>
         </div>
     </div>
+
+    <p id="barcodeResult">Scanned Barcode: None</p>
 
     <h1 id="red-title">ONE CLICK PER PERSON</h1>
 
@@ -277,6 +284,45 @@
 
 
 <script>
+    document.getElementById('start-scanner').addEventListener('click', function () {
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: document.querySelector('#interactive'),
+                constraints: {
+                    width: 640,
+                    height: 480,
+                    facingMode: "environment" // Use "user" for the front-facing camera on a computer
+                },
+            },
+            decoder: {
+                readers: ["code_128_reader"]
+            },
+            locator: {
+                patchSize: "medium",
+                halfSample: true,
+            },
+            numOfWorkers: navigator.hardwareConcurrency || 4,
+            frequency: 10,
+            locate: true,
+        }, function (err) {
+            if (err) {
+                console.error(err);
+                return
+            }
+            console.log("Initialization finished. Ready to start");
+            Quagga.start();
+        });
+
+        Quagga.onDetected(function (data) {
+            var barcode = data.codeResult.code;
+            document.getElementById('barcodeResult').textContent = 'Scanned Barcode: ' + barcode;
+            Quagga.stop();
+            //checkIfStudentCanSubmit(data.codeResult.code);
+        });
+    });
+
 
 
     document.getElementById('clickButton1').addEventListener('click', function () {
@@ -427,6 +473,8 @@
 
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+
 </body>
 
 </html>
