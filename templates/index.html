@@ -187,6 +187,37 @@
             transform: scale(1.1);
             transition: transform 0.3s ease;
         }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #barcode-scanner {
+            position: fixed;
+            /* Overlay the entire page */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            /* Full width of the viewport */
+            height: 100vh;
+            /* Full height of the viewport */
+            z-index: 10000;
+            /* High z-index to overlay on top of other content */
+            background: rgba(0, 0, 0, 0.8);
+            /* Optional: semi-transparent black background */
+        }
+
+        #interactive.viewport {
+            width: 100%;
+            /* Use the full width of the container */
+            height: 100%;
+            /* Use the full height of the container */
+            position: relative;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -322,6 +353,37 @@
             //checkIfStudentCanSubmit(data.codeResult.code);
         });
     });
+    document.addEventListener('DOMContentLoaded', function () {
+        startScanner(); // Start the scanner as soon as the page loads
+    });
+
+    function startScanner() {
+        Quagga.init({
+            // your existing Quagga init configuration
+        }, function (err) {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            Quagga.start();
+        });
+
+        Quagga.onDetected(function (data) {
+            // your existing onDetected code
+            Quagga.stop(); // Stop the scanner after a barcode is detected
+        });
+    }
+
+    document.getElementById('submitFeedbackButton').addEventListener('click', function () {
+        // your existing feedback submission code
+        startScanner(); // Restart the scanner after feedback is submitted
+    });
+
+    document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
+        // your existing feedback submission code
+        startScanner(); // Restart the scanner after feedback is submitted
+    });
+
 
 
 
