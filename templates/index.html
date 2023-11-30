@@ -212,6 +212,37 @@
             transform: scale(1.1);
             transition: transform 0.3s ease;
         }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #barcode-scanner {
+            position: fixed;
+            /* Overlay the entire page */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            /* Full width of the viewport */
+            height: 100vh;
+            /* Full height of the viewport */
+            z-index: 10000;
+            /* High z-index to overlay on top of other content */
+            background: rgba(0, 0, 0, 0.8);
+            /* Optional: semi-transparent black background */
+        }
+
+        #interactive.viewport {
+            width: 100%;
+            /* Use the full width of the container */
+            height: 100%;
+            /* Use the full height of the container */
+            position: relative;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -258,6 +289,8 @@
             <button id="submitWithoutFeedbackButton">Submit without Feedback</button>
         </div>
     </div>
+
+    <p id="barcodeResult">Scanned Barcode: None</p>
 
     <h1 id="red-title">ONE CLICK PER PERSON</h1>
 
@@ -310,6 +343,76 @@
 
 
 <script>
+    document.getElementById('start-scanner').addEventListener('click', function () {
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: document.querySelector('#interactive'),
+                constraints: {
+                    width: 640,
+                    height: 480,
+                    facingMode: "environment" // Use "user" for the front-facing camera on a computer
+                },
+            },
+            decoder: {
+                readers: ["code_128_reader"]
+            },
+            locator: {
+                patchSize: "medium",
+                halfSample: true,
+            },
+            numOfWorkers: navigator.hardwareConcurrency || 4,
+            frequency: 10,
+            locate: true,
+        }, function (err) {
+            if (err) {
+                console.error(err);
+                return
+            }
+            console.log("Initialization finished. Ready to start");
+            Quagga.start();
+        });
+
+        Quagga.onDetected(function (data) {
+            var barcode = data.codeResult.code;
+            document.getElementById('barcodeResult').textContent = 'Scanned Barcode: ' + barcode;
+            Quagga.stop();
+            //checkIfStudentCanSubmit(data.codeResult.code);
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        startScanner(); // Start the scanner as soon as the page loads
+    });
+
+    function startScanner() {
+        Quagga.init({
+            // your existing Quagga init configuration
+        }, function (err) {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            Quagga.start();
+        });
+
+        Quagga.onDetected(function (data) {
+            // your existing onDetected code
+            Quagga.stop(); // Stop the scanner after a barcode is detected
+        });
+    }
+
+    document.getElementById('submitFeedbackButton').addEventListener('click', function () {
+        // your existing feedback submission code
+        startScanner(); // Restart the scanner after feedback is submitted
+    });
+
+    document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
+        // your existing feedback submission code
+        startScanner(); // Restart the scanner after feedback is submitted
+    });
+
+
 
 
     document.getElementById('clickButton1').addEventListener('click', function () {
@@ -478,6 +581,8 @@
 
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+
 </body>
 
 </html>
