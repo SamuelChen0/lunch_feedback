@@ -5,6 +5,31 @@
 
     <title>HAS Lunch Feedback</title>
     <style>
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #000000;
+            width: 30%;
+            /* Adjust the width as needed */
+            margin-bottom: 10px;
+        }
+
+        #userID {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #000000;
+            width: 50%;
+            /* Adjust the width as needed */
+            margin: 10px auto;
+            /* Updated margin for centering horizontally */
+        }
+
+        label {
+            color: black;
+            font-size: 40px;
+            /* Set the text color to black */
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             color: white;
@@ -209,6 +234,14 @@
 </head>
 
 <body>
+    <div id="barcode-scanner">
+        <div id="interactive" class="viewport"></div>
+        <button id="start-scanner">Scan Barcode</button>
+    </div>
+    <div>
+        <label for="userID" style="display: block; margin-bottom: 10px;">Enter Your ID:</label>
+        <input type="text" id="userID" name="userID" style="display: block;">
+    </div>
     <div class="popup" id="successPopup">
         <div class="popup-content">
             <p>Your response has been recorded successfully!</p>
@@ -329,6 +362,12 @@
     // Event listener for the new "Submit without Feedback" button
     document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
         const rating = parseInt(submitButton.getAttribute('data-rating'));
+        const userIDInput = document.getElementById('userID'); // Get user ID input field
+        const userID = userIDInput.value.trim(); // Get user ID from input field
+        if (userID === "") {
+            alert("Please enter your ID before submitting feedback.");
+            return;
+        }
 
         // Get the current date
         const currentDate = new Date().toISOString();
@@ -337,42 +376,49 @@
         const feedbackRef = firebase.database().ref('feedback')
 
         // Write only rating and date to the database
-        feedbackRef.push({ rating: rating, date: currentDate })
+        feedbackRef.push({ rating: rating, userID: userID, date: currentDate })
             .then(() => {
-                console.log('Rating successfully written to the database');
+                console.log('Rating and ID successfully written to the database');
                 popup.style.display = "none";
                 feedbackInput.value = ''; // Clear the input field
+                userIDInput.value = ''; // Clear the ID input field
                 showSuccessPopupAndCloseAfterTwoSeconds();
-                // Update click count or other UI elements as necessary
+                // Your existing code to update click count or other UI elements as necessary
             })
             .catch((error) => {
-                console.error('Error writing rating to the database: ', error);
+                console.error('Error writing rating and ID to the database: ', error);
             });
     });
 
-    // ...
-
+    // Event listener for the "Submit" button
     submitButton.addEventListener('click', function () {
         const rating = parseInt(submitButton.getAttribute('data-rating'));
-        var feedback = feedbackInput.value; // Get feedback comment from input field
+        const feedback = feedbackInput.value.trim(); // Get feedback comment from input field
+        const userID = document.getElementById('userID').value.trim(); // Get user ID from input field
+
+        if (userID === "") {
+            alert("Please enter your ID before submitting feedback.");
+            return;
+        }
 
         // Get the current date
         const currentDate = new Date().toISOString();
 
         // Reference to the "feedback" node in the database
-        const feedbackRef = firebase.database().ref('feedback')
+        const feedbackRef = firebase.database().ref('feedback');
 
-        // Write rating, feedback, and date to the database
-        feedbackRef.push({ rating: rating, feedback: feedback, date: currentDate })
+        // Write rating, feedback, user ID, and date to the database
+        feedbackRef.push({ rating: rating, feedback: feedback, userID: userID, date: currentDate })
             .then(() => {
-                console.log('Rating and feedback successfully written to the database');
+                console.log('Rating, feedback, and ID successfully written to the database');
                 popup.style.display = "none";
                 feedbackInput.value = ''; // Clear the input field
+                document.getElementById('userID').value = ''; // Clear the ID input field
                 showSuccessPopupAndCloseAfterTwoSeconds();
-                // Your existing code to update click count
+                // Your existing code to update click count or other UI elements as necessary
             })
             .catch((error) => {
-                console.error('Error writing rating and feedback to the database: ', error);
+                console.error('Error writing rating, feedback, and ID to the database: ', error);
             });
     });
     function showSuccessPopupAndCloseAfterTwoSeconds() {
@@ -395,12 +441,17 @@
     function displayRating(rating) {
         const popup = document.getElementById("popup");
         const ratingDisplay = document.getElementById("selectedRating");
+
         let stars = "";
         for (let i = 0; i < rating; i++) {
             stars += "<i class='fa fa-star' style='color: gold;'></i>"; // Add a star for each point in the rating
         }
         ratingDisplay.innerHTML = "Rating: " + stars; // Update the rating display with stars
         submitButton.setAttribute('data-rating', rating);
+
+        const userID = document.getElementById('userID').value.trim();
+        ratingDisplay.innerHTML += "<br>ID: " + userID; // Add the user ID to the rating display
+
         popup.style.display = "block";
     }
 
