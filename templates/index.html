@@ -5,6 +5,14 @@
 
     <title>HAS Lunch Feedback</title>
     <style>
+        #interactive.viewport {
+            width: 100%;
+            /* Use the full width of the container */
+            height: 100%;
+            /* Use the full height of the container */
+        }
+
+
         input[type="text"] {
             padding: 10px;
             border-radius: 5px;
@@ -223,7 +231,7 @@
 
         #barcode-scanner {
             position: fixed;
-            /* Overlay the entire page */
+            /* Position it over the entire page content */
             top: 0;
             left: 0;
             width: 100vw;
@@ -231,17 +239,28 @@
             height: 100vh;
             /* Full height of the viewport */
             z-index: 10000;
-            /* High z-index to overlay on top of other content */
+            /* High z-index to ensure it is on top */
+            display: flex;
+            /* Use flexbox for centering the contents */
+            justify-content: center;
+            align-items: center;
             background: rgba(0, 0, 0, 0.8);
-            /* Optional: semi-transparent black background */
+            /* Semi-transparent black background */
         }
 
         #interactive.viewport {
             width: 100%;
-            /* Use the full width of the container */
+            /* Full width of its container */
             height: 100%;
-            /* Use the full height of the container */
+            /* Full height of its container */
             position: relative;
+        }
+
+        #interactive.viewport video {
+            object-fit: cover;
+            /* Ensure the video fills the entire container */
+            width: 100%;
+            height: 100%;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -267,11 +286,12 @@
 <body>
     <div id="barcode-scanner">
         <div id="interactive" class="viewport"></div>
-        <button id="start-scanner">Scan Barcode</button>
-    </div>
-    <div>
-        <label for="userID" style="display: block; margin-bottom: 10px;">Enter Your ID:</label>
-        <input type="text" id="userID" name="userID" style="display: block;">
+        <div>
+            <label for="userID" style="display: block; margin-bottom: 10px; color: white;">Enter Your ID:</label>
+            <input type="text" id="userID" name="userID" style="display: block;">
+            <button id="confirmIDButton" style="margin-top: 10px;">Confirm ID</button>
+        </div>
+        <button id="start-scanner" style="margin-top: 20px;">Scan Barcode</button>
     </div>
     <div class="popup" id="successPopup">
         <div class="popup-content">
@@ -348,43 +368,47 @@
             inputStream: {
                 name: "Live",
                 type: "LiveStream",
-                target: document.querySelector('#interactive'),
+                target: document.querySelector('#interactive'), // Target the #interactive div for the video
                 constraints: {
-                    width: 640,
-                    height: 480,
-                    facingMode: "environment" // Use "user" for the front-facing camera on a computer
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                    facingMode: "environment" // Adjust as needed
                 },
             },
             decoder: {
-                readers: ["code_128_reader"]
+                readers: ["code_128_reader"] // or other readers as per your requirement
             },
-            locator: {
-                patchSize: "medium",
-                halfSample: true,
-            },
-            numOfWorkers: navigator.hardwareConcurrency || 4,
-            frequency: 10,
-            locate: true,
+            // ... other configuration options
         }, function (err) {
             if (err) {
                 console.error(err);
-                return
+                return;
             }
-            console.log("Initialization finished. Ready to start");
             Quagga.start();
         });
 
         Quagga.onDetected(function (data) {
             var barcode = data.codeResult.code;
             document.getElementById('barcodeResult').textContent = 'Scanned Barcode: ' + barcode;
-            Quagga.stop();
-            //checkIfStudentCanSubmit(data.codeResult.code);
+            Quagga.stop(); // Optionally stop the scanner
+            // ... additional code for handling the scanned barcode
         });
     });
     document.addEventListener('DOMContentLoaded', function () {
         startScanner(); // Start the scanner as soon as the page loads
     });
 
+    document.getElementById('confirmIDButton').addEventListener('click', function () {
+        // Handle user ID confirmation
+        var userID = document.getElementById('userID').value.trim();
+        if (userID === "") {
+            alert("Please enter your ID.");
+        } else {
+            // Hide the scanner and ID input, or perform other actions as needed
+            document.getElementById('barcode-scanner').style.display = 'none';
+            // Enable other parts of the page for feedback submission
+        }
+    });
     function startScanner() {
         Quagga.init({
             // your existing Quagga init configuration
