@@ -417,6 +417,7 @@
         }
     });
     function startScanner() {
+        document.getElementById('barcode-scanner').style.display = 'flex'; 
         Quagga.init({
             // your existing Quagga init configuration
         }, function (err) {
@@ -517,6 +518,7 @@
                 feedbackInput.value = ''; // Clear the input field
                 userIDInput.value = ''; // Clear the ID input field
                 showSuccessPopupAndCloseAfterTwoSeconds();
+                startScanner();
                 // Your existing code to update click count or other UI elements as necessary
             })
             .catch((error) => {
@@ -549,6 +551,7 @@
                 feedbackInput.value = ''; // Clear the input field
                 document.getElementById('userID').value = ''; // Clear the ID input field
                 showSuccessPopupAndCloseAfterTwoSeconds();
+                startScanner();
                 // Your existing code to update click count or other UI elements as necessary
             })
             .catch((error) => {
