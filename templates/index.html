@@ -287,8 +287,16 @@
     <div id="barcode-scanner">
         <div id="interactive" class="viewport"></div>
         <div>
-            <label for="userID" style="display: block; margin-bottom: 10px; color: white;">Enter Your ID:</label>
-            <input type="text" id="userID" name="userID" style="display: block;">
+            <label for="userID" style="display: block; margin-bottom: 10px; color: white;">Select Your ID:</label>
+            <select id="userID" name="userID" style="display: block;">
+                <!-- Replace these options with actual user IDs -->
+                <option value="">Select name</option>
+                <option value="Ryan">Ryan Chen</option>
+                <option value="Grissom">Grissom Ting</option>
+                <option value="Jefferson">Jeff</option>
+                <option value="Mr.jaeger">Mr. Jaeger</option>
+                <!-- Add more options as needed -->
+            </select>
             <button id="confirmIDButton" style="margin-top: 10px;">Confirm ID</button>
         </div>
         <button id="start-scanner" style="margin-top: 20px;">Scan Barcode</button>
@@ -402,10 +410,9 @@
     });
 
     document.getElementById('confirmIDButton').addEventListener('click', function () {
-        // Handle user ID confirmation
-        var userID = document.getElementById('userID').value.trim();
+        var userID = document.getElementById('userID').value;
         if (userID === "") {
-            alert("Please enter your ID.");
+            alert("Please select your ID.");
         } else {
             // Hide the scanner and ID input, or perform other actions as needed
             document.getElementById('barcode-scanner').style.display = 'none';
@@ -413,6 +420,7 @@
         }
     });
     function startScanner() {
+        document.getElementById('barcode-scanner').style.display = 'flex'; 
         Quagga.init({
             // your existing Quagga init configuration
         }, function (err) {
@@ -517,6 +525,7 @@
                 feedbackInput.value = ''; // Clear the input field
                 userIDInput.value = ''; // Clear the ID input field
                 showSuccessPopupAndCloseAfterTwoSeconds();
+                startScanner();
                 // Your existing code to update click count or other UI elements as necessary
             })
             .catch((error) => {
@@ -549,6 +558,7 @@
                 feedbackInput.value = ''; // Clear the input field
                 document.getElementById('userID').value = ''; // Clear the ID input field
                 showSuccessPopupAndCloseAfterTwoSeconds();
+                startScanner();
                 // Your existing code to update click count or other UI elements as necessary
             })
             .catch((error) => {
