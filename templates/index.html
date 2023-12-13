@@ -5,6 +5,24 @@
 
     <title>HAS Lunch Feedback</title>
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Specific class for the top banner */
+        .top-banner {
+            display: block;
+            width: 100%;
+            height: 70px;
+            margin: 0;
+        }
+
+/* Other styles remain the same... */
+
+
         #interactive.viewport {
             width: 100%;
             /* Use the full width of the container */
@@ -284,6 +302,7 @@
 </head>
 
 <body>
+    <img src="/static/top.png" alt="Fancy Banner" class="top-banner">
     <div id="barcode-scanner">
         <div id="interactive" class="viewport"></div>
         <div>
