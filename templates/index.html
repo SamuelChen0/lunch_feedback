@@ -39,13 +39,17 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            color: white;
-            /* Set the text color to white */
+            font-family: 'Dancing Script', cursive;
+            /* Use Dancing Script font */
+            color: black;
+            /* Change the text color to black */
+            background-color: white;
+            /* Set the background color to white */
             margin: 0;
             padding: 0;
             text-align: center;
         }
+
 
         body::before {
             content: "";
@@ -54,17 +58,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('static/Good_Food_Display_-_NCI_Visuals_Online.jpg') no-repeat center center fixed;
+            background: url('static/720.jpg') no-repeat center center fixed;
             background-size: cover;
             z-index: -1;
             opacity: 0.43;
-            /* Adjust the opacity value as needed */
         }
 
         h1,
         h2,
         h3 {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Dancing Script', sans-serif;
             font-weight: bold;
             text-align: center;
             color: rgb(5, 5, 5);
@@ -263,6 +266,7 @@
             height: 100%;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -354,9 +358,9 @@
                 <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
-        </div>
-        <button id="goToScannerButton" style="margin-top: 20px;">Go to Scanner</button>
-        </div>
+    </div>
+    <button id="goToScannerButton" style="margin-top: 20px;">Go to Scanner</button>
+    </div>
     </div>
 
     <!-- <img src="https://media2.giphy.com/media/a5viI92PAF89q/200w.gif?cid=6c09b952kiuxs4jgkbxxy4v7pjhavr0l2cmpsfxgcmvyzrci&ep=v1_gifs_search&rid=200w.gif&ct=g" > -->
@@ -420,7 +424,7 @@
         }
     });
     function startScanner() {
-        document.getElementById('barcode-scanner').style.display = 'flex'; 
+        document.getElementById('barcode-scanner').style.display = 'flex';
         Quagga.init({
             // your existing Quagga init configuration
         }, function (err) {
@@ -625,5 +629,4 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 
 </body>
-
 </html>
