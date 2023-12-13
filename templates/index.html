@@ -4,12 +4,78 @@
 <head>
 
     <title>HAS Lunch Feedback</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        jQuery(document).ready(function ($) {
+            $('#userID').select2({
+                placeholder: "Select a name",
+                allowClear: true,
+                theme: "classic"
+            });
+        });
+    </script>
+
     <style>
+        .select2-container--open .select2-dropdown {
+            z-index: 1000 !important;
+        }
+
         #interactive.viewport {
             width: 100%;
             /* Use the full width of the container */
             height: 100%;
             /* Use the full height of the container */
+        }
+
+        #goToScannerButton {
+            position: fixed;
+            /* or 'absolute' if you want it to scroll with the page */
+            right: 0;
+            /* Align to the right side of the viewport */
+            top: 50%;
+            /* Adjust this value as needed to position vertically */
+            width: 200px;
+            /* Set a specific width */
+            height: 60px;
+            /* Set a specific height */
+            margin: 0 20px;
+            /* Add margin to the right */
+            padding: 10px;
+            /* Add some padding */
+            font-size: 20px;
+            /* Increase the font size */
+            /* Background color */
+            color: rgb(0, 0, 0);
+            /* Text color */
+            border: none;
+            /* Remove border */
+            border-radius: 10px;
+            /* Rounded corners */
+            cursor: pointer;
+            /* Cursor change on hover */
+            transform: translateY(-50%);
+            /* Center vertically */
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            /* Smooth transform on hover */
+            background: linear-gradient(45deg, rgb(227, 156, 156), rgb(170, 4, 4), rgb(251, 255, 136));
+            background-size: 150% 150%;
+            /* Reduced from 300% to 150% */
+            animation: flowngWater 2s infinite linear;
+            will-change: background-position;
+
+        }
+
+        #goToScannerButton:hover {
+            background-color: #367c39;
+            /* Slightly darker green on hover */
         }
 
 
@@ -26,26 +92,48 @@
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #000000;
-            width: 50%;
+            width: 90%;
             /* Adjust the width as needed */
             margin: 10px auto;
             /* Updated margin for centering horizontally */
         }
 
+
+        #confirmIDButton {
+            padding: 12px 35px;
+            /* Increased padding for larger size */
+            font-size: 15px;
+            /* Larger font size */
+            border-radius: 8px;
+            /* Adjusted border-radius for aesthetic */
+            /* You can also add other styles like background color, border, etc. to make it stand out more */
+            background: linear-gradient(45deg, yellow, lightblue, rgb(138, 255, 136));
+            background-size: 150% 150%;
+            /* Reduced from 300% to 150% */
+            animation: flowingWater 2s infinite linear;
+            will-change: background-position;
+            /* Optimizes for animations */
+        }
+
+
         label {
-            color: black;
+            color: white;
+            /* Set the text color to white */
+        }
+
+        label[for="userID"] {
             font-size: 40px;
-            /* Set the text color to black */
+            /* Adjust the font size as needed */
+            /* You can also add other styling here if needed, like font-weight, color, etc. */
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            color: white;
             /* Set the text color to white */
             margin: 0;
             padding: 0;
             text-align: center;
         }
+
 
         body::before {
             content: "";
@@ -87,7 +175,7 @@
             display: block;
             margin: 0 auto;
             width: 50%;
-            height: 55%;
+            height: 75%;
             margin-top: 30px;
         }
 
@@ -144,6 +232,173 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        @keyframes flowingWater {
+            0% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 0% 50%;
+            }
+
+            5% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 10% 50%;
+            }
+
+            10% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 20% 50%;
+            }
+
+            15% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 30% 50%;
+            }
+
+            20% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 40% 50%;
+            }
+
+            25% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 50% 50%;
+            }
+
+            30% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 60% 50%;
+            }
+
+            35% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 70% 50%;
+            }
+
+            40% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 80% 50%;
+            }
+
+            45% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 90% 50%;
+            }
+
+            50% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 100% 50%;
+            }
+
+            55% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 110% 50%;
+            }
+
+            60% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 120% 50%;
+            }
+
+            65% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 130% 50%;
+            }
+
+            70% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 140% 50%;
+            }
+
+            75% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 150% 50%;
+            }
+
+            80% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 160% 50%;
+            }
+
+            85% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 170% 50%;
+            }
+
+            90% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 180% 50%;
+            }
+
+            95% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 190% 50%;
+            }
+
+            100% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 200% 50%;
+            }
+        }
+
+
+
+        @keyframes flowngWater {
+            0% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 0% 50%;
+            }
+
+            10% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 20% 50%;
+            }
+
+            20% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 40% 50%;
+            }
+
+            30% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 60% 50%;
+            }
+
+            40% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 80% 50%;
+            }
+
+            50% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 100% 50%;
+            }
+
+            60% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 120% 50%;
+            }
+
+            70% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 140% 50%;
+            }
+
+            80% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 160% 50%;
+            }
+
+            90% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 180% 50%;
+            }
+
+            100% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 200% 50%;
+            }
+
         }
 
         .button-container {
@@ -238,7 +493,7 @@
             /* Full width of the viewport */
             height: 100vh;
             /* Full height of the viewport */
-            z-index: 10000;
+            z-index: 100;
             /* High z-index to ensure it is on top */
             display: flex;
             /* Use flexbox for centering the contents */
@@ -284,20 +539,29 @@
 </head>
 
 <body>
+    <div id="welcomeMessage" style="font-size: 60px; color: rgb(6, 6, 6); margin-top: 20px;"></div>
     <div id="barcode-scanner">
         <div id="interactive" class="viewport"></div>
         <div>
-            <label for="userID" style="display: block; margin-bottom: 10px; color: white;">Select Your ID:</label>
-            <select id="userID" name="userID" style="display: block;">
+            <label for="userID" style="display: block; margin-bottom: 10px;">Select Your ID/Name:</label>
+            <select id="userID" name="userID" style="width: 50%;">
                 <!-- Replace these options with actual user IDs -->
                 <option value="">Select name</option>
                 <option value="Ryan">Ryan Chen</option>
                 <option value="Grissom">Grissom Ting</option>
                 <option value="Jefferson">Jeff</option>
                 <option value="Mr.jaeger">Mr. Jaeger</option>
+                <option value="Allen Chen">Allen Chen</option>
+                <option value="Samuel">Samuel Chen</option>
+                <option value="Mr.ottmar">Ottmar</option>
+                <option value="TooTallEagle">Eagle Lee</option>
+                <option value="Green hat">Tim Chen</option>
+                <option value="Gina">Gina</option>
+                <option value="Senor Perez">Mr. Perez</option>
+                <option value="EEason">Eason Kuo</option>
                 <!-- Add more options as needed -->
             </select>
-            <button id="confirmIDButton" style="margin-top: 10px;">Confirm ID</button>
+            <button id="confirmIDButton" style="margin-top: 10px;"><b>Confirm ID/NAME</b></button>
         </div>
         <button id="start-scanner" style="margin-top: 20px;">Scan Barcode</button>
     </div>
@@ -318,7 +582,6 @@
         </div>
     </div>
 
-    <p id="barcodeResult">Scanned Barcode: None</p>
 
     <h1 id="red-title">ONE CLICK PER PERSON</h1>
 
@@ -354,8 +617,8 @@
                 <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
-        </div>
-        <button id="goToScannerButton" style="margin-top: 20px;">Go to Scanner</button>
+        <div>
+            <button id="goToScannerButton" style="margin-top: 20px;"><b>Go Back</b></button>
         </div>
     </div>
 
@@ -374,6 +637,18 @@
 
 
 <script>
+    document.getElementById('confirmIDButton').addEventListener('click', function () {
+        var userID = document.getElementById('userID').value;
+        var userName = $('#userID option:selected').text(); // Get the selected user's name
+        if (userID === "") {
+            alert("Please select your ID.");
+        } else {
+            document.getElementById('welcomeMessage').innerHTML = "Welcome " + userName + "!"; // Update the welcome message
+            // Hide the scanner and ID input, or perform other actions as needed
+            document.getElementById('barcode-scanner').style.display = 'none';
+            // Enable other parts of the page for feedback submission
+        }
+    });
     document.getElementById('start-scanner').addEventListener('click', function () {
         Quagga.init({
             inputStream: {
@@ -420,7 +695,7 @@
         }
     });
     function startScanner() {
-        document.getElementById('barcode-scanner').style.display = 'flex'; 
+        document.getElementById('barcode-scanner').style.display = 'flex';
         Quagga.init({
             // your existing Quagga init configuration
         }, function (err) {
@@ -436,10 +711,6 @@
             Quagga.stop(); // Stop the scanner after a barcode is detected
         });
     }
-    document.getElementById('goToScannerButton').addEventListener('click', function () {
-        // Start the scanner again
-        startScanner();
-    });
 
     document.getElementById('submitFeedbackButton').addEventListener('click', function () {
         // your existing feedback submission code
@@ -598,6 +869,11 @@
 
         popup.style.display = "block";
     }
+
+    document.getElementById('goToScannerButton').addEventListener('click', function () {
+        // Start the scanner again
+        startScanner();
+    });
 
     document.getElementById('clickButton1').addEventListener('click', function () {
         displayRating(1);
