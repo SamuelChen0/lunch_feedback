@@ -639,11 +639,11 @@
                 <option value="Allen Chen">Allen Chen</option>
                 <option value="Samuel">Samuel Chen</option>
                 <option value="Mr.ottmar">Ottmar</option>
-                <option value="TooTallEagle">Eagle Lee</option>
+                <option value="Eagle">Eagle Lee</option>
                 <option value="Green hat">Tim Chen</option>
                 <option value="Gina">Gina</option>
                 <option value="Senor Perez">Mr. Perez</option>
-                <option value="EEason">Eason Kuo</option>
+                <option value="Eason">Eason Kuo</option>
                 <!-- Add more options as needed -->
             </select>
             <button id="confirmIDButton" style="margin-top: 10px;"><b>Confirm ID/NAME</b></button>
@@ -810,7 +810,7 @@
         }
     });
     function startScanner() {
-        document.getElementById('barcode-scanner').style.display = 'flex';
+        const scannerContainer = document.getElementById('barcode-scanner');
         Quagga.init({
             // your existing Quagga init configuration
         }, function (err) {
@@ -824,6 +824,7 @@
         Quagga.onDetected(function (data) {
             // your existing onDetected code
             Quagga.stop(); // Stop the scanner after a barcode is detected
+            scannerContainer.style.display = 'none';
         });
     }
 
