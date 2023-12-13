@@ -437,39 +437,94 @@
             /* Adjust the size as needed */
             color: rgb(5, 5, 5);
         }
-
-        #submitWithoutFeedbackButton {
-            background-color: #008CBA;
-            /* Blue background */
-            color: white;
+#submitWithoutFeedbackButton {
+            position: relative;
+            z-index: 0;
+            min-width: 200px;
+            border: 2px solid currentColor;
+            border-radius: 48px;
+            color: #FF0FF0;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            overflow: hidden;
+            transition: 0.2s transform ease-in-out;
+            will-change: transform;
             padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+        }
+
+        #submitWithoutFeedbackButton:after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            background-color: #ff0ff0;
+            border-radius: 3rem;
+            transform: translate(-100%, 0) rotate(10deg);
+            transform-origin: top left;
+            transition: 0.2s transform ease-out;
+            will-change: transform;
+        }
+
+        #submitWithoutFeedbackButton:hover:after {
+            transform: translate(0, 0);
         }
 
         #submitWithoutFeedbackButton:hover {
-            background-color: #007B9E;
-            /* Darker blue on hover */
+            border: 2px solid transparent;
+            color: #FFFFFF;
+            transform: scale(1.05);
+            will-change: transform;
         }
 
+
         #submitFeedbackButton {
-            background-color: #008CBA;
-            /* Blue background */
-            color: white;
+            position: relative;
+            z-index: 0;
+            min-width: 200px;
+            border: 2px solid currentColor;
+            border-radius: 48px;
+            color: #626FAA;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            overflow: hidden;
+            transition: 0.2s transform ease-in-out;
+            will-change: transform;
             padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+        }
+
+        #submitFeedbackButton:after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            background-color: #626faa;
+            border-radius: 3rem;
+            transform: translate(-100%, 0) rotate(10deg);
+            transform-origin: top left;
+            transition: 0.2s transform ease-out;
+            will-change: transform;
+        }
+
+        #submitFeedbackButton:hover:after {
+            transform: translate(0, 0);
         }
 
         #submitFeedbackButton:hover {
-            background-color: #007B9E;
-            /* Darker blue on hover */
+            border: 2px solid transparent;
+            color: #FFFFFF;
+            transform: scale(1.05);
+            will-change: transform;
         }
-
 
         .click_size:hover {
             transform: scale(1.1);
