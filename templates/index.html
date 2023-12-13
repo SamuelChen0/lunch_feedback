@@ -564,18 +564,21 @@
             height: 100%;
         }
 
-        #todaysMenu, #tomorrowsMenu {
+        #todaysMenu,
+        #tomorrowsMenu {
             margin-top: 20px;
             text-align: center;
         }
 
-        #todaysMenu h2, #tomorrowsMenu h2 {
+        #todaysMenu h2,
+        #tomorrowsMenu h2 {
             color: #333;
             /* Change the color as needed */
             margin-bottom: 10px;
         }
 
-        #todaysMenu div, #tomorrowsMenu div {
+        #todaysMenu div,
+        #tomorrowsMenu div {
             display: flex;
             /* Use flexbox to align children in a row */
             justify-content: center;
@@ -586,7 +589,8 @@
             /* Add some space between items */
         }
 
-        #todaysMenu div p, #tomorrowsMenu div p {
+        #todaysMenu div p,
+        #tomorrowsMenu div p {
             font-size: 24px;
             /* Increase the font size */
             background-color: #f8f8f8;
@@ -764,7 +768,11 @@
         startScanner();
     });
 
-
+    function handleScanComplete() {
+        // Hide or remove the scanner container
+        const scannerContainer = document.getElementById('barcode-scanner');
+        scannerContainer.style.display = 'none';
+    }
     function displayMenuForDate(date) {
         const dateString = date.toLocaleDateString('en-US', {
             year: 'numeric',
@@ -822,195 +830,216 @@
         });
 
         Quagga.onDetected(function (data) {
-            // your existing onDetected code
-            Quagga.stop(); // Stop the scanner after a barcode is detected
-            scannerContainer.style.display = 'none';
+            // Extract the barcode data from the scan result
+            const barcodeData = data.codeResult.code;
+
+            // Update the welcome message with the barcode data
+            document.getElementById('welcomeMessage').innerHTML = "Welcome " + barcodeData + "!";
+
+            // Hide the scanner and ID input, or perform other actions as needed
+            document.getElementById('barcode-scanner').style.display = 'none';
+
+            // Enable other parts of the page for feedback submission
         });
-    }
 
-    document.getElementById('submitFeedbackButton').addEventListener('click', function () {
-        // your existing feedback submission code
-        startScanner(); // Restart the scanner after feedback is submitted
-    });
+        document.getElementById('submitFeedbackButton').addEventListener('click', function () {
+            // your existing feedback submission code
+            startScanner(); // Restart the scanner after feedback is submitted
+        });
 
-    document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
-        // your existing feedback submission code
-        startScanner(); // Restart the scanner after feedback is submitted
-    });
-
+        document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
+            // your existing feedback submission code
+            startScanner(); // Restart the scanner after feedback is submitted
+        });
 
 
 
-    document.getElementById('clickButton1').addEventListener('click', function () {
-        const popup = document.getElementById("popup");
-        submitButton.setAttribute('data-rating', 1);
-        popup.style.display = "block";
-    });
+
+        document.getElementById('clickButton1').addEventListener('click', function () {
+            const popup = document.getElementById("popup");
+            submitButton.setAttribute('data-rating', 1);
+            popup.style.display = "block";
+        });
 
 
 
-    document.getElementById('clickButton2').addEventListener('click', function () {
-        const popup = document.getElementById("popup");
-        submitButton.setAttribute('data-rating', 2);
-        popup.style.display = "block";
+        document.getElementById('clickButton2').addEventListener('click', function () {
+            const popup = document.getElementById("popup");
+            submitButton.setAttribute('data-rating', 2);
+            popup.style.display = "block";
 
-    });
-    document.getElementById('clickButton3').addEventListener('click', function () {
-        const popup = document.getElementById("popup");
-        submitButton.setAttribute('data-rating', 3);
-        popup.style.display = "block";
+        });
+        document.getElementById('clickButton3').addEventListener('click', function () {
+            const popup = document.getElementById("popup");
+            submitButton.setAttribute('data-rating', 3);
+            popup.style.display = "block";
 
-    });
-    document.getElementById('clickButton4').addEventListener('click', function () {
-        const popup = document.getElementById("popup");
-        submitButton.setAttribute('data-rating', 4);
-        popup.style.display = "block";
-    });
+        });
+        document.getElementById('clickButton4').addEventListener('click', function () {
+            const popup = document.getElementById("popup");
+            submitButton.setAttribute('data-rating', 4);
+            popup.style.display = "block";
+        });
 
-    // Close the popup when clicking the overlay
-    const overlay = document.getElementById('popup');
-    overlay.addEventListener('click', function (e) {
-        if (e.target === overlay) {
+        // Close the popup when clicking the overlay
+        const overlay = document.getElementById('popup');
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) {
+                overlay.style.display = "none";
+                feedbackInput.value = ''; // Clear the input field
+            }
+        });
+
+        // Close the popup when clicking the close button
+        const closePopupButton = document.getElementById('closePopup');
+        closePopupButton.addEventListener('click', function () {
             overlay.style.display = "none";
             feedbackInput.value = ''; // Clear the input field
-        }
-    });
+        });
 
-    // Close the popup when clicking the close button
-    const closePopupButton = document.getElementById('closePopup');
-    closePopupButton.addEventListener('click', function () {
-        overlay.style.display = "none";
-        feedbackInput.value = ''; // Clear the input field
-    });
-
-    const popup = document.getElementById("popup");
-    const feedbackInput = document.getElementById('popupTextInput');
-    const submitButton = document.getElementById('submitFeedbackButton');
-
-
-    // Event listener for the new "Submit without Feedback" button
-    document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
-        const rating = parseInt(submitButton.getAttribute('data-rating'));
-        const userIDInput = document.getElementById('userID'); // Get user ID input field
-        const userID = userIDInput.value.trim(); // Get user ID from input field
-        if (userID === "") {
-            alert("Please enter your ID before submitting feedback.");
-            return;
-        }
-
-        // Get the current date
-        const currentDate = new Date().toISOString();
-
-        // Reference to the "feedback" node in the database
-        const feedbackRef = firebase.database().ref('feedback')
-
-        // Write only rating and date to the database
-        feedbackRef.push({ rating: rating, userID: userID, date: currentDate })
-            .then(() => {
-                console.log('Rating and ID successfully written to the database');
-                popup.style.display = "none";
-                feedbackInput.value = ''; // Clear the input field
-                userIDInput.value = ''; // Clear the ID input field
-                showSuccessPopupAndCloseAfterTwoSeconds();
-                startScanner();
-                // Your existing code to update click count or other UI elements as necessary
-            })
-            .catch((error) => {
-                console.error('Error writing rating and ID to the database: ', error);
-            });
-    });
-
-    // Event listener for the "Submit" button
-    submitButton.addEventListener('click', function () {
-        const rating = parseInt(submitButton.getAttribute('data-rating'));
-        const feedback = feedbackInput.value.trim(); // Get feedback comment from input field
-        const userID = document.getElementById('userID').value.trim(); // Get user ID from input field
-
-        if (userID === "") {
-            alert("Please enter your ID before submitting feedback.");
-            return;
-        }
-
-        // Get the current date
-        const currentDate = new Date().toISOString();
-
-        // Reference to the "feedback" node in the database
-        const feedbackRef = firebase.database().ref('feedback');
-
-        // Write rating, feedback, user ID, and date to the database
-        feedbackRef.push({ rating: rating, feedback: feedback, userID: userID, date: currentDate })
-            .then(() => {
-                console.log('Rating, feedback, and ID successfully written to the database');
-                popup.style.display = "none";
-                feedbackInput.value = ''; // Clear the input field
-                document.getElementById('userID').value = ''; // Clear the ID input field
-                showSuccessPopupAndCloseAfterTwoSeconds();
-                startScanner();
-                // Your existing code to update click count or other UI elements as necessary
-            })
-            .catch((error) => {
-                console.error('Error writing rating, feedback, and ID to the database: ', error);
-            });
-    });
-    function showSuccessPopupAndCloseAfterTwoSeconds() {
-        const successPopup = document.getElementById("successPopup");
-        successPopup.style.display = "block";
-
-        // Close the success popup after two seconds
-        setTimeout(function () {
-            successPopup.style.display = "none";
-        }, 2000); // 2000 milliseconds (2 seconds)
-    }
-    document.getElementById('clickButton5').addEventListener('click', function () {
         const popup = document.getElementById("popup");
-        submitButton.setAttribute('data-rating', 5);
-        popup.style.display = "block";
-
-    });
+        const feedbackInput = document.getElementById('popupTextInput');
+        const submitButton = document.getElementById('submitFeedbackButton');
 
 
-    function displayRating(rating) {
-        const popup = document.getElementById("popup");
-        const ratingDisplay = document.getElementById("selectedRating");
+        // Event listener for the new "Submit without Feedback" button
+        document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
+            const rating = parseInt(submitButton.getAttribute('data-rating'));
+            const userIDInput = document.getElementById('userID'); // Get user ID input field
+            const userID = userIDInput.value.trim(); // Get user ID from input field
+            if (userID === "") {
+                alert("Please enter your ID before submitting feedback.");
+                return;
+            }
 
-        let stars = "";
-        for (let i = 0; i < rating; i++) {
-            stars += "<i class='fa fa-star' style='color: gold;'></i>"; // Add a star for each point in the rating
+            // Get the current date
+            const currentDate = new Date().toISOString();
+
+            // Reference to the "feedback" node in the database
+            const feedbackRef = firebase.database().ref('feedback')
+
+            // Write only rating and date to the database
+            feedbackRef.push({ rating: rating, userID: userID, date: currentDate })
+                .then(() => {
+                    console.log('Rating and ID successfully written to the database');
+                    popup.style.display = "none";
+                    feedbackInput.value = ''; // Clear the input field
+                    userIDInput.value = ''; // Clear the ID input field
+                    showSuccessPopupAndCloseAfterTwoSeconds();
+                    startScanner();
+                    // Your existing code to update click count or other UI elements as necessary
+                })
+                .catch((error) => {
+                    console.error('Error writing rating and ID to the database: ', error);
+                });
+        });
+
+        // Event listener for the "Submit" button
+        submitButton.addEventListener('click', function () {
+            const rating = parseInt(submitButton.getAttribute('data-rating'));
+            const feedback = feedbackInput.value.trim(); // Get feedback comment from input field
+            const userID = document.getElementById('userID').value.trim(); // Get user ID from input field
+
+            if (userID === "") {
+                alert("Please enter your ID before submitting feedback.");
+                return;
+            }
+
+            // Get the current date
+            const currentDate = new Date().toISOString();
+
+            // Reference to the "feedback" node in the database
+            const feedbackRef = firebase.database().ref('feedback');
+
+            // Write rating, feedback, user ID, and date to the database
+            feedbackRef.push({ rating: rating, feedback: feedback, userID: userID, date: currentDate })
+                .then(() => {
+                    console.log('Rating, feedback, and ID successfully written to the database');
+                    popup.style.display = "none";
+                    feedbackInput.value = ''; // Clear the input field
+                    document.getElementById('userID').value = ''; // Clear the ID input field
+                    showSuccessPopupAndCloseAfterTwoSeconds();
+                    startScanner();
+                    // Your existing code to update click count or other UI elements as necessary
+                })
+                .catch((error) => {
+                    console.error('Error writing rating, feedback, and ID to the database: ', error);
+                });
+        });
+        function showSuccessPopupAndCloseAfterTwoSeconds() {
+            const successPopup = document.getElementById("successPopup");
+            successPopup.style.display = "block";
+
+            // Close the success popup after two seconds
+            setTimeout(function () {
+                successPopup.style.display = "none";
+            }, 2000); // 2000 milliseconds (2 seconds)
         }
-        ratingDisplay.innerHTML = "Rating: " + stars; // Update the rating display with stars
-        submitButton.setAttribute('data-rating', rating);
+        document.getElementById('clickButton5').addEventListener('click', function () {
+            const popup = document.getElementById("popup");
+            submitButton.setAttribute('data-rating', 5);
+            popup.style.display = "block";
 
-        const userID = document.getElementById('userID').value.trim();
-        ratingDisplay.innerHTML += "<br>ID: " + userID; // Add the user ID to the rating display
+        });
 
-        popup.style.display = "block";
+
+        function displayRating(rating) {
+            const popup = document.getElementById("popup");
+            const ratingDisplay = document.getElementById("selectedRating");
+
+            // Create a div element for stars
+            const starsDiv = document.createElement('div');
+            starsDiv.style.color = 'gold';
+            for (let i = 0; i < rating; i++) {
+                const starIcon = document.createElement('i');
+                starIcon.className = 'fa fa-star';
+                starsDiv.appendChild(starIcon);
+            }
+
+            // Create a div element for the user ID
+            const userIDDiv = document.createElement('div');
+            const userID = document.getElementById('userID').value.trim();
+            userIDDiv.innerHTML = "ID: " + userID;
+
+            // Clear any previous content in ratingDisplay
+            ratingDisplay.innerHTML = '';
+
+            // Append the stars and user ID to ratingDisplay
+            ratingDisplay.appendChild(starsDiv);
+            ratingDisplay.appendChild(userIDDiv);
+
+            // Update the data-rating attribute
+            submitButton.setAttribute('data-rating', rating);
+
+            // Display the popup
+            popup.style.display = "block";
+        }
+
+        document.getElementById('goToScannerButton').addEventListener('click', function () {
+            // Start the scanner again
+            startScanner();
+        });
+
+        document.getElementById('clickButton1').addEventListener('click', function () {
+            displayRating(1);
+        });
+
+        document.getElementById('clickButton2').addEventListener('click', function () {
+            displayRating(2);
+        });
+
+        document.getElementById('clickButton3').addEventListener('click', function () {
+            displayRating(3);
+        });
+
+        document.getElementById('clickButton4').addEventListener('click', function () {
+            displayRating(4);
+        });
+
+        document.getElementById('clickButton5').addEventListener('click', function () {
+            displayRating(5);
+        });
     }
-
-    document.getElementById('goToScannerButton').addEventListener('click', function () {
-        // Start the scanner again
-        startScanner();
-    });
-
-    document.getElementById('clickButton1').addEventListener('click', function () {
-        displayRating(1);
-    });
-
-    document.getElementById('clickButton2').addEventListener('click', function () {
-        displayRating(2);
-    });
-
-    document.getElementById('clickButton3').addEventListener('click', function () {
-        displayRating(3);
-    });
-
-    document.getElementById('clickButton4').addEventListener('click', function () {
-        displayRating(4);
-    });
-
-    document.getElementById('clickButton5').addEventListener('click', function () {
-        displayRating(5);
-    });
-
 
 
 </script>
