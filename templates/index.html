@@ -154,7 +154,7 @@
         }
 
         .image-button {
-            background: linear-gradient(to bottom, #4CAF50, #45a049);
+            background: transparent;
             color: white;
             border: none;
             cursor: pointer;
@@ -165,6 +165,7 @@
         }
 
         .image-button:hover {
+            background: linear-gradient(to bottom, #4CAF50, #45a049);
             transform: scale(1.1);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
@@ -262,6 +263,23 @@
             width: 100%;
             height: 100%;
         }
+        .blinking {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+                
+        
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -586,6 +604,70 @@
         const popup = document.getElementById("popup");
         const ratingDisplay = document.getElementById("selectedRating");
 
+        // Clear the existing content in ratingDisplay
+        ratingDisplay.innerHTML = "";
+
+        // Create stars dynamically based on the rating and make them initially invisible
+        for (let i = 0; i < 5; i++) {
+            const starIcon = document.createElement("i");
+            starIcon.className = "fa fa-star";
+            starIcon.style.color = "gold";
+            starIcon.style.visibility = i < rating ? "visible" : "hidden";
+            ratingDisplay.appendChild(starIcon);
+        }
+
+        // Update the rating display with the user ID
+        const userID = document.getElementById('userID').value.trim();
+        ratingDisplay.innerHTML += "<br>ID: " + userID;
+
+        // Trigger the blinking effect
+        blinkRatingButtons();
+        // Wait for the blinking effect to finish (adjust the timeout duration as needed)
+        setTimeout(function () {
+            popup.style.display = "block";
+        }, 1000); // Adjust the timeout duration (in milliseconds) as needed
+    }
+    
+    function blinkRatingButtons() {
+        const ratingButtons = document.querySelectorAll('.image-button');
+        ratingButtons.forEach(button => {
+            button.classList.add('blinking'); // Add a CSS class for blinking effect
+            setTimeout(() => {
+                button.classList.remove('blinking'); // Remove the blinking class after a timeout
+            }, 1000); // Adjust the timeout duration (in milliseconds) as needed
+        });
+    }
+
+
+    document.getElementById('clickButton1').addEventListener('click', function () {
+    displayRating(1);
+    blinkRatingButtons(); // Call the blinking function
+    });
+
+    document.getElementById('clickButton2').addEventListener('click', function () {
+        displayRating(2);
+        blinkRatingButtons(); // Call the blinking function
+    });
+
+    document.getElementById('clickButton3').addEventListener('click', function () {
+        displayRating(3);
+        blinkRatingButtons(); // Call the blinking function
+    });
+
+    document.getElementById('clickButton4').addEventListener('click', function () {
+        displayRating(4);
+        blinkRatingButtons(); // Call the blinking function
+    });
+
+    document.getElementById('clickButton5').addEventListener('click', function () {
+        displayRating(5);
+        blinkRatingButtons(); // Call the blinking function
+    });
+    // Function to display the suggestion part after clicking a rating button
+    function displayRating(rating) {
+        const popup = document.getElementById("popup");
+        const ratingDisplay = document.getElementById("selectedRating");
+
         let stars = "";
         for (let i = 0; i < rating; i++) {
             stars += "<i class='fa fa-star' style='color: gold;'></i>"; // Add a star for each point in the rating
@@ -598,27 +680,6 @@
 
         popup.style.display = "block";
     }
-
-    document.getElementById('clickButton1').addEventListener('click', function () {
-        displayRating(1);
-    });
-
-    document.getElementById('clickButton2').addEventListener('click', function () {
-        displayRating(2);
-    });
-
-    document.getElementById('clickButton3').addEventListener('click', function () {
-        displayRating(3);
-    });
-
-    document.getElementById('clickButton4').addEventListener('click', function () {
-        displayRating(4);
-    });
-
-    document.getElementById('clickButton5').addEventListener('click', function () {
-        displayRating(5);
-    });
-
 
 
 </script>
