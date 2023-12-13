@@ -4,24 +4,29 @@
 <head>
 
     <title>HAS Lunch Feedback</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        jQuery(document).ready(function ($) {
+            $('#userID').select2({
+                placeholder: "Select a name",
+                allowClear: true,
+                theme: "classic"
+            });
+        });
+    </script>
+
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+        .select2-container--open .select2-dropdown {
+            z-index: 1000 !important;
         }
-
-        /* Specific class for the top banner */
-        .top-banner {
-            display: block;
-            width: 100%;
-            height: 70px;
-            margin: 0;
-        }
-
-/* Other styles remain the same... */
-
 
         #interactive.viewport {
             width: 100%;
@@ -29,6 +34,33 @@
             height: 100%;
             /* Use the full height of the container */
         }
+
+        #goToScannerButton {
+            position: absolute;
+            /* Changed from 'fixed' to 'absolute' */
+            left: 20px;
+            /* Distance from the left edge */
+            top: 20px;
+            /* Distance from the top */
+            width: 200px;
+            height: 60px;
+            margin: 0;
+            padding: 10px;
+            font-size: 20px;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: linear-gradient(45deg, rgb(227, 156, 156), rgb(170, 4, 4), rgb(251, 255, 136));
+            background-size: 150% 150%;
+            animation: flowngWater 2s infinite linear;
+            will-change: background-position;
+        }
+
+        #goToScannerButton:hover {
+            background-color: #367c39;
+        }
+
 
 
         input[type="text"] {
@@ -44,26 +76,55 @@
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #000000;
-            width: 50%;
+            width: 90%;
             /* Adjust the width as needed */
             margin: 10px auto;
             /* Updated margin for centering horizontally */
         }
 
+
+        #confirmIDButton {
+            padding: 12px 35px;
+            /* Increased padding for larger size */
+            font-size: 15px;
+            /* Larger font size */
+            border-radius: 8px;
+            /* Adjusted border-radius for aesthetic */
+            /* You can also add other styles like background color, border, etc. to make it stand out more */
+            background: linear-gradient(45deg, yellow, lightblue, rgb(138, 255, 136));
+            background-size: 150% 150%;
+            /* Reduced from 300% to 150% */
+            animation: flowingWater 2s infinite linear;
+            will-change: background-position;
+            /* Optimizes for animations */
+        }
+
+
         label {
-            color: black;
+            color: white;
+            /* Set the text color to white */
+        }
+
+        label[for="userID"] {
             font-size: 40px;
-            /* Set the text color to black */
+            /* Adjust the font size as needed */
+            /* You can also add other styling here if needed, like font-weight, color, etc. */
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            color: white;
-            /* Set the text color to white */
+
+            font-family: 'Dancing Script', cursive;
+            /* Use Dancing Script font */
+            color: black;
+            /* Change the text color to black */
+            background-color: white;
+            /* Set the background color to white */
+
             margin: 0;
             padding: 0;
             text-align: center;
         }
+
 
         body::before {
             content: "";
@@ -72,17 +133,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('static/Good_Food_Display_-_NCI_Visuals_Online.jpg') no-repeat center center fixed;
+            background: url('static/720.jpg') no-repeat center center fixed;
             background-size: cover;
             z-index: -1;
             opacity: 0.43;
-            /* Adjust the opacity value as needed */
         }
 
         h1,
         h2,
         h3 {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Dancing Script', sans-serif;
             font-weight: bold;
             text-align: center;
             color: rgb(5, 5, 5);
@@ -105,7 +165,7 @@
             display: block;
             margin: 0 auto;
             width: 50%;
-            height: 55%;
+            height: 75%;
             margin-top: 30px;
         }
 
@@ -164,6 +224,173 @@
             }
         }
 
+        @keyframes flowingWater {
+            0% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 0% 50%;
+            }
+
+            5% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 10% 50%;
+            }
+
+            10% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 20% 50%;
+            }
+
+            15% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 30% 50%;
+            }
+
+            20% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 40% 50%;
+            }
+
+            25% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 50% 50%;
+            }
+
+            30% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 60% 50%;
+            }
+
+            35% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 70% 50%;
+            }
+
+            40% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 80% 50%;
+            }
+
+            45% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 90% 50%;
+            }
+
+            50% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 100% 50%;
+            }
+
+            55% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 110% 50%;
+            }
+
+            60% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 120% 50%;
+            }
+
+            65% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 130% 50%;
+            }
+
+            70% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 140% 50%;
+            }
+
+            75% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 150% 50%;
+            }
+
+            80% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 160% 50%;
+            }
+
+            85% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 170% 50%;
+            }
+
+            90% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 180% 50%;
+            }
+
+            95% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 190% 50%;
+            }
+
+            100% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 200% 50%;
+            }
+        }
+
+
+
+        @keyframes flowngWater {
+            0% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 0% 50%;
+            }
+
+            10% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 20% 50%;
+            }
+
+            20% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 40% 50%;
+            }
+
+            30% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 60% 50%;
+            }
+
+            40% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 80% 50%;
+            }
+
+            50% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 100% 50%;
+            }
+
+            60% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 120% 50%;
+            }
+
+            70% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 140% 50%;
+            }
+
+            80% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 160% 50%;
+            }
+
+            90% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 180% 50%;
+            }
+
+            100% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 200% 50%;
+            }
+
+        }
+
         .button-container {
             display: flex;
             gap: 10px;
@@ -202,37 +429,93 @@
         }
 
         #submitWithoutFeedbackButton {
-            background-color: #008CBA;
-            /* Blue background */
-            color: white;
+            position: relative;
+            z-index: 0;
+            min-width: 200px;
+            border: 2px solid currentColor;
+            border-radius: 48px;
+            color: #FF0FF0;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            overflow: hidden;
+            transition: 0.2s transform ease-in-out;
+            will-change: transform;
             padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+        }
+
+        #submitWithoutFeedbackButton:after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            background-color: #ff0ff0;
+            border-radius: 3rem;
+            transform: translate(-100%, 0) rotate(10deg);
+            transform-origin: top left;
+            transition: 0.2s transform ease-out;
+            will-change: transform;
+        }
+
+        #submitWithoutFeedbackButton:hover:after {
+            transform: translate(0, 0);
         }
 
         #submitWithoutFeedbackButton:hover {
-            background-color: #007B9E;
-            /* Darker blue on hover */
+            border: 2px solid transparent;
+            color: #FFFFFF;
+            transform: scale(1.05);
+            will-change: transform;
         }
 
+
         #submitFeedbackButton {
-            background-color: #008CBA;
-            /* Blue background */
-            color: white;
+            position: relative;
+            z-index: 0;
+            min-width: 200px;
+            border: 2px solid currentColor;
+            border-radius: 48px;
+            color: #626FAA;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            overflow: hidden;
+            transition: 0.2s transform ease-in-out;
+            will-change: transform;
             padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+        }
+
+        #submitFeedbackButton:after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            background-color: #626faa;
+            border-radius: 3rem;
+            transform: translate(-100%, 0) rotate(10deg);
+            transform-origin: top left;
+            transition: 0.2s transform ease-out;
+            will-change: transform;
+        }
+
+        #submitFeedbackButton:hover:after {
+            transform: translate(0, 0);
         }
 
         #submitFeedbackButton:hover {
-            background-color: #007B9E;
-            /* Darker blue on hover */
+            border: 2px solid transparent;
+            color: #FFFFFF;
+            transform: scale(1.05);
+            will-change: transform;
         }
-
 
         .click_size:hover {
             transform: scale(1.1);
@@ -256,7 +539,7 @@
             /* Full width of the viewport */
             height: 100vh;
             /* Full height of the viewport */
-            z-index: 10000;
+            z-index: 100;
             /* High z-index to ensure it is on top */
             display: flex;
             /* Use flexbox for centering the contents */
@@ -280,7 +563,46 @@
             width: 100%;
             height: 100%;
         }
+
+        #todaysMenu, #tomorrowsMenu {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #todaysMenu h2, #tomorrowsMenu h2 {
+            color: #333;
+            /* Change the color as needed */
+            margin-bottom: 10px;
+        }
+
+        #todaysMenu div, #tomorrowsMenu div {
+            display: flex;
+            /* Use flexbox to align children in a row */
+            justify-content: center;
+            /* Center the items horizontally */
+            flex-wrap: wrap;
+            /* Wrap items to next line if they don't fit */
+            gap: 10px;
+            /* Add some space between items */
+        }
+
+        #todaysMenu div p, #tomorrowsMenu div p {
+            font-size: 24px;
+            /* Increase the font size */
+            background-color: #f8f8f8;
+            /* Light background for each dish */
+            padding: 10px 15px;
+            /* Adjust padding for better spacing */
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
+            margin: 5px;
+            /* Add some margin for spacing between items */
+            color: #333;
+            /* Optional: Change text color */
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -302,23 +624,30 @@
 </head>
 
 <body>
-    <img src="/static/top.png" alt="Fancy Banner" class="top-banner">
+    <div id="welcomeMessage" style="font-size: 60px; color: rgb(6, 6, 6); margin-top: 20px;"></div>
     <div id="barcode-scanner">
         <div id="interactive" class="viewport"></div>
         <div>
-            <label for="userID" style="display: block; margin-bottom: 10px; color: white;">Select Your ID:</label>
-            <select id="userID" name="userID" style="display: block;">
+            <label for="userID" style="display: block; margin-bottom: 10px;">Select Your ID/Name:</label>
+            <select id="userID" name="userID" style="width: 50%;">
                 <!-- Replace these options with actual user IDs -->
                 <option value="">Select name</option>
                 <option value="Ryan">Ryan Chen</option>
                 <option value="Grissom">Grissom Ting</option>
                 <option value="Jefferson">Jeff</option>
                 <option value="Mr.jaeger">Mr. Jaeger</option>
+                <option value="Allen Chen">Allen Chen</option>
+                <option value="Samuel">Samuel Chen</option>
+                <option value="Mr.ottmar">Ottmar</option>
+                <option value="TooTallEagle">Eagle Lee</option>
+                <option value="Green hat">Tim Chen</option>
+                <option value="Gina">Gina</option>
+                <option value="Senor Perez">Mr. Perez</option>
+                <option value="EEason">Eason Kuo</option>
                 <!-- Add more options as needed -->
             </select>
-            <button id="confirmIDButton" style="margin-top: 10px;">Confirm ID</button>
+            <button id="confirmIDButton" style="margin-top: 10px;"><b>Confirm ID/NAME</b></button>
         </div>
-        <button id="start-scanner" style="margin-top: 20px;">Scan Barcode</button>
     </div>
     <div class="popup" id="successPopup">
         <div class="popup-content">
@@ -337,7 +666,6 @@
         </div>
     </div>
 
-    <p id="barcodeResult">Scanned Barcode: None</p>
 
     <h1 id="red-title">ONE CLICK PER PERSON</h1>
 
@@ -373,10 +701,31 @@
                 <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
             </button>
         </div>
+
+        <div>
+            <button id="goToScannerButton" style="margin-top: 20px;">
+                &#8592; <b>Go Back</b>
+            </button>
         </div>
-        <button id="goToScannerButton" style="margin-top: 20px;">Go to Scanner</button>
+
+    </div>
+
+    <div id="todaysMenu" style="margin-top: 20px;">
+        <h2>Today's Menu</h2>
+        <div id="menuItems"> <!-- Container for the dishes -->
+            <!-- Menu items will be added here by the script -->
         </div>
     </div>
+
+    <!-- Tomorrow's Menu Section -->
+    <div id="tomorrowsMenu" style="margin-top: 20px;">
+        <h2>Tomorrow's Menu</h2>
+        <div id="tomorrowsMenuItems"> <!-- Container for tomorrow's dishes -->
+            <!-- Tomorrow's menu items will be added here by the script -->
+        </div>
+    </div>
+
+
 
     <!-- <img src="https://media2.giphy.com/media/a5viI92PAF89q/200w.gif?cid=6c09b952kiuxs4jgkbxxy4v7pjhavr0l2cmpsfxgcmvyzrci&ep=v1_gifs_search&rid=200w.gif&ct=g" > -->
     <!-- <img src="https://media1.giphy.com/media/A5ugHVbuFL3uo/200w.gif?cid=6c09b952cc2tbgf6hciig4dbpeg73xgq5npjr7hdigkfcrko&ep=v1_gifs_search&rid=200w.gif&ct=g" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
@@ -384,7 +733,6 @@
     <!-- <img src="https://static.wixstatic.com/media/2c4bb8_d5088ac72fc64b6e967d5ede6c912128~mv2.jpg/v1/fill/w_1224,h_865,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/112%E5%B9%B411%E6%9C%88%E4%BB%BD%20Lunch%20Menu.jpg" style = "float: middle;"> -->
 
     <!-- <img scr="NovemberLunchMenu_pages-to-jpg-0001.jpg" style = "float: middle"> -->
-    <img src="/static/nov.jpg" alt="November Image">
 
 </body>
 
@@ -393,40 +741,63 @@
 
 
 <script>
-    document.getElementById('start-scanner').addEventListener('click', function () {
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                target: document.querySelector('#interactive'), // Target the #interactive div for the video
-                constraints: {
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                    facingMode: "environment" // Adjust as needed
-                },
-            },
-            decoder: {
-                readers: ["code_128_reader"] // or other readers as per your requirement
-            },
-            // ... other configuration options
-        }, function (err) {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            Quagga.start();
-        });
-
-        Quagga.onDetected(function (data) {
-            var barcode = data.codeResult.code;
-            document.getElementById('barcodeResult').textContent = 'Scanned Barcode: ' + barcode;
-            Quagga.stop(); // Optionally stop the scanner
-            // ... additional code for handling the scanned barcode
-        });
+    document.getElementById('confirmIDButton').addEventListener('click', function () {
+        var userID = document.getElementById('userID').value;
+        var userName = $('#userID option:selected').text(); // Get the selected user's name
+        if (userID === "") {
+            alert("Please select your ID.");
+        } else {
+            document.getElementById('welcomeMessage').innerHTML = "Welcome " + userName + "!"; // Update the welcome message
+            // Hide the scanner and ID input, or perform other actions as needed
+            document.getElementById('barcode-scanner').style.display = 'none';
+            // Enable other parts of the page for feedback submission
+        }
     });
     document.addEventListener('DOMContentLoaded', function () {
-        startScanner(); // Start the scanner as soon as the page loads
+        // Get today's date in the format "MM-DD-YYYY"
+
+        displayMenuForDate(new Date()); // Display today's menu
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1); // Set to tomorrow's date
+        displayMenuForDate(tomorrow); // Display tomorrow's menu
+
+        startScanner();
     });
+
+
+    function displayMenuForDate(date) {
+        const dateString = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).split('/').join('-');
+
+        const menuRef = firebase.database().ref('menu/' + dateString);
+        menuRef.once('value', function (snapshot) {
+            const menu = snapshot.val();
+            if (menu) {
+                if (dateString === new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).split('/').join('-')) {
+                    displayMenu(menu, 'menuItems'); // Today's menu
+                } else {
+                    displayMenu(menu, 'tomorrowsMenuItems'); // Tomorrow's menu
+                }
+            } else {
+                console.log('No menu found for ' + dateString);
+            }
+        });
+    }
+
+    function displayMenu(menu, containerId) {
+        let dishesContainer = document.getElementById(containerId);
+        dishesContainer.innerHTML = ''; // Clear previous dishes
+
+        for (const key in menu) {
+            const dish = menu[key];
+            const dishElement = document.createElement('p');
+            dishElement.textContent = dish;
+            dishesContainer.appendChild(dishElement); // Add to the dishes container
+        }
+    }
 
     document.getElementById('confirmIDButton').addEventListener('click', function () {
         var userID = document.getElementById('userID').value;
@@ -439,7 +810,7 @@
         }
     });
     function startScanner() {
-        document.getElementById('barcode-scanner').style.display = 'flex'; 
+        document.getElementById('barcode-scanner').style.display = 'flex';
         Quagga.init({
             // your existing Quagga init configuration
         }, function (err) {
@@ -455,10 +826,6 @@
             Quagga.stop(); // Stop the scanner after a barcode is detected
         });
     }
-    document.getElementById('goToScannerButton').addEventListener('click', function () {
-        // Start the scanner again
-        startScanner();
-    });
 
     document.getElementById('submitFeedbackButton').addEventListener('click', function () {
         // your existing feedback submission code
@@ -617,6 +984,11 @@
 
         popup.style.display = "block";
     }
+
+    document.getElementById('goToScannerButton').addEventListener('click', function () {
+        // Start the scanner again
+        startScanner();
+    });
 
     document.getElementById('clickButton1').addEventListener('click', function () {
         displayRating(1);
