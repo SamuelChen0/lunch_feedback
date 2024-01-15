@@ -22,6 +22,71 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Define a dictionary for students with IDs and names
+            const students = {
+                'Ryan': 'Ryan Chen',
+                'Grissom': 'Grissom Ting',
+                'Jeff': 'Jefferson',
+                'Mr.jaeger': 'Mr. Jaeger',
+                'Allen Chen': 'Allen Chen',
+                'Samuel': 'Samuel Chen',
+                'Mr.ottmar': 'Ottmar',
+                'TooTallEagle': 'Eagle Lee',
+                'Green hat': 'Tim Chen',
+                'Gina': 'Gina',
+                'Mr. Perez': 'Mr. Perez',
+                'Eason': 'Eason Kuo',
+                'Tony' : 'Tony Ding',
+                'Brad' : 'Brad Lin',
+                'Mr.Loi' : 'Mr. Loi',
+                'Mr. Cam' : 'Cameren Murphy',
+                'Eugene' : 'Eugene Gau',
+                'Oscar' : 'Oscar Chiu',
+                // Add more students as needed
+            };
+
+            const userIDSelect = document.getElementById('userID');
+
+            // Clear existing options
+            userIDSelect.innerHTML = '';
+
+            // Add default option
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'Select name';
+            userIDSelect.appendChild(defaultOption);
+
+            // Populate options from the 'students' dictionary
+            for (const id in students) {
+                const option = document.createElement('option');
+                option.value = id;
+                option.textContent = students[id];
+                userIDSelect.appendChild(option);
+            }
+
+            // Initialize Select2
+            $('#userID').select2({
+                placeholder: "Select a name",
+                allowClear: true,
+                theme: "classic"
+            });
+        });
+
+        document.getElementById('confirmIDButton').addEventListener('click', function () {
+            var userID = document.getElementById('userID').value;
+            var userName = $('#userID option:selected').text(); // Get the selected user's name
+            if (userID === "") {
+                alert("Please select your ID.");
+            } else {
+                document.getElementById('welcomeMessage').innerHTML = "Welcome " + userName + "!"; // Update the welcome message
+                // Hide the scanner and ID input, or perform other actions as needed
+                document.getElementById('barcode-scanner').style.display = 'none';
+                // Enable other parts of the page for feedback submission
+            }
+        });
+    </script>
 
     <style>
         .select2-container--open .select2-dropdown {
@@ -564,18 +629,21 @@
             height: 100%;
         }
 
-        #todaysMenu, #tomorrowsMenu {
+        #todaysMenu,
+        #tomorrowsMenu {
             margin-top: 20px;
             text-align: center;
         }
 
-        #todaysMenu h2, #tomorrowsMenu h2 {
+        #todaysMenu h2,
+        #tomorrowsMenu h2 {
             color: #333;
             /* Change the color as needed */
             margin-bottom: 10px;
         }
 
-        #todaysMenu div, #tomorrowsMenu div {
+        #todaysMenu div,
+        #tomorrowsMenu div {
             display: flex;
             /* Use flexbox to align children in a row */
             justify-content: center;
@@ -586,7 +654,8 @@
             /* Add some space between items */
         }
 
-        #todaysMenu div p, #tomorrowsMenu div p {
+        #todaysMenu div p,
+        #tomorrowsMenu div p {
             font-size: 24px;
             /* Increase the font size */
             background-color: #f8f8f8;
@@ -631,20 +700,7 @@
             <label for="userID" style="display: block; margin-bottom: 10px;">Select Your ID/Name:</label>
             <select id="userID" name="userID" style="width: 50%;">
                 <!-- Replace these options with actual user IDs -->
-                <option value="">Select name</option>
-                <option value="Ryan">Ryan Chen</option>
-                <option value="Grissom">Grissom Ting</option>
-                <option value="Jefferson">Jeff</option>
-                <option value="Mr.jaeger">Mr. Jaeger</option>
-                <option value="Allen Chen">Allen Chen</option>
-                <option value="Samuel">Samuel Chen</option>
-                <option value="Mr.ottmar">Ottmar</option>
-                <option value="TooTallEagle">Eagle Lee</option>
-                <option value="Green hat">Tim Chen</option>
-                <option value="Gina">Gina</option>
-                <option value="Senor Perez">Mr. Perez</option>
-                <option value="EEason">Eason Kuo</option>
-                <!-- Add more options as needed -->
+               <!-- Add more options as needed -->
             </select>
             <button id="confirmIDButton" style="margin-top: 10px;"><b>Confirm ID/NAME</b></button>
         </div>
@@ -753,6 +809,14 @@
             // Enable other parts of the page for feedback submission
         }
     });
+
+    document.getElementById('goToScannerButton').addEventListener('click', function () {
+        // Add code to navigate to the second page or toggle its visibility
+        document.getElementById('barcode-scanner').style.display = 'flex';
+        document.getElementById('second-page-container').style.display = 'none'; // Adjust the container ID accordingly
+        startScanner(); // Restart the scanner
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         // Get today's date in the format "MM-DD-YYYY"
 
@@ -812,18 +876,39 @@
     function startScanner() {
         document.getElementById('barcode-scanner').style.display = 'flex';
         Quagga.init({
-            // your existing Quagga init configuration
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: document.querySelector('#interactive'), // Pass the target element
+                constraints: {
+                    facingMode: "enviroment" // Use the back camera
+                }
+            },
+            decoder: {
+                readers: ["code_128_reader", "qrcode_reader"]// Specify the barcode formats to decode
+                // Add more readers as needed
+            },
+            locate: true // Enable locating of the barcode in the image
         }, function (err) {
             if (err) {
                 console.error(err);
+                alert("Error starting QuaggaJS: " + err.message);
                 return;
             }
             Quagga.start();
         });
 
         Quagga.onDetected(function (data) {
-            // your existing onDetected code
-            Quagga.stop(); // Stop the scanner after a barcode is detected
+            var userID = data.text(); // Assuming the ID is in the barcode data
+            if (userID === "") {
+                alert("Please select your ID.");
+            } else {
+                document.getElementById('welcomeMessage').innerHTML = "Welcome " + userID + "!";
+                document.getElementById('barcode-scanner').style.display = 'none';
+                // Enable other parts of the page for feedback submission
+            }
+            Quagga.stop();
+            // Continue with other necessary actions
         });
     }
 
