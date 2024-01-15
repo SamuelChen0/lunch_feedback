@@ -693,8 +693,10 @@
 </head>
 
 <body>
+
     <div id="welcomeMessage" style="font-size: 60px; color: rgb(6, 6, 6); margin-top: 20px;"></div>
     <div id="barcode-scanner">
+<<<<<<< HEAD
         <div id="interactive" class="viewport"></div>
         <div>
             <label for="userID" style="display: block; margin-bottom: 10px;">Select Your ID/Name:</label>
@@ -703,6 +705,23 @@
                <!-- Add more options as needed -->
             </select>
             <button id="confirmIDButton" style="margin-top: 10px;"><b>Confirm ID/NAME</b></button>
+=======
+        <div style="text-align: center; padding: 20px;">
+            <h2 style="color:#ffffff; font-size: 36px; margin-bottom: 20px;">Step 1</h2>
+            <h1 style="color:#ffffff; margin-bottom: 50px;">Please use the barcode scanner to scan the barcode on your
+                Student ID</h1>
+            <img src="static/scanning.jpg" alt="Scanning Icon" style="max-width: 200px; margin: 20px auto;">
+
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 50px;">
+                <label for="userID" style="font-size: 24px; margin-bottom: 0;">or Select Your Name:</label>
+                <select id="userID" name="userID"
+                    style="width: 30%; max-width: 100px; padding: 10px 0; line-height: 1.5; font-size: 18px;">
+                    <option value="">Select name</option>
+                    <!-- JavaScript will add options here -->
+                </select>
+                <button id="confirmIDButton" style="padding: 10px 15px;"><b>Confirm Name</b></button>
+            </div>
+>>>>>>> e7b71ca2ebf48c985db316dfde3560601f8a2f84
         </div>
     </div>
     <div class="popup" id="successPopup">
@@ -715,15 +734,12 @@
         <div class="popup-content">
             <span class="close-button" id="closePopup">X</span>
             <p id="selectedRating"></p> <!-- Place to display the selected rating -->
-            <p>Suggestion/Complain (optional)</p>
+            <p>Suggestion/Complaint (optional)</p>
             <input type="text" id="popupTextInput" placeholder="Enter your text">
             <button id="submitFeedbackButton">Submit</button>
             <button id="submitWithoutFeedbackButton">Submit without Feedback</button>
         </div>
     </div>
-
-
-    <h1 id="red-title">ONE CLICK PER PERSON</h1>
 
     <h1>HAS Lunch Feedback</h1>
     <div class="button-container">
@@ -797,6 +813,42 @@
 
 
 <script>
+
+    function loadStudentData() {
+        const csvUrl = 'static/studentIDs.csv'; // Replace with the URL to your CSV file
+
+        fetch(csvUrl)
+            .then(response => response.text())
+            .then(data => {
+                const lines = data.split('\n');
+                lines.forEach((line, index) => {
+                    if (index > 0 && line) { // Skip the header line
+                        // Using a regular expression to match the pattern of the line
+                        const match = line.match(/(\d+),(\d+),(\d+),\"(.*?)\",(\w+)/);
+                        console.log(match)
+                        if (match) {
+                            const name = match[4]; // Extracted name
+                            const id = match[5]; // Extracted ID
+
+                            // Split the name by the first comma only
+                            const [surname, firstNameAndNickname] = name.split(/,(.+)/);
+                            if (surname && firstNameAndNickname) {
+                                const fullName = `${firstNameAndNickname.trim()} ${surname.trim()}`;
+
+                                const option = document.createElement('option');
+                                option.value = id.trim();
+                                option.textContent = fullName;
+                                document.getElementById('userID').appendChild(option);
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading student data:', error));
+    }
+
+    let lastKeypressTime = 0;
+
     document.getElementById('confirmIDButton').addEventListener('click', function () {
         var userID = document.getElementById('userID').value;
         var userName = $('#userID option:selected').text(); // Get the selected user's name
@@ -825,9 +877,57 @@
         tomorrow.setDate(tomorrow.getDate() + 1); // Set to tomorrow's date
         displayMenuForDate(tomorrow); // Display tomorrow's menu
 
+        document.addEventListener('keydown', handleBarcodeScannerInput);
         startScanner();
+        loadStudentData();
     });
 
+
+    function handleBarcodeScannerInput(e) {
+        // Check if the input is coming in quick succession (like from a barcode scanner)
+        const currentTime = new Date().getTime();
+        if (currentTime - lastKeypressTime < 50) {
+            // Concatenate barcode input if it's part of the current scanning
+            barcodeData += e.key;
+        } else {
+            // Reset barcode data if it's a new scanning
+            barcodeData = e.key;
+        }
+        lastKeypressTime = currentTime;
+
+        // Check for a specific key (like Enter) to finish scanning
+        if (e.key === 'Enter') {
+            // Prevent the default action to avoid form submission
+            e.preventDefault();
+
+            // Process the scanned barcode data
+            processBarcodeData(barcodeData.trim());
+        }
+    }
+
+    function processBarcodeData(barcode) {
+        // Set the userID select dropdown to the value of the scanned barcode
+        const userIDSelect = document.getElementById('userID');
+        let found = false;
+        for (let option of userIDSelect.options) {
+            if (option.value === barcode) {
+                option.selected = true;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            // Handle the case where the barcode does not match any option
+            console.warn('Barcode does not match any user ID');
+            // Optionally, you can alert the user or take other actions
+        }
+        // Hide the scanner view and proceed to the main page
+        var userID = document.getElementById('userID').value;
+        var userName = $('#userID option:selected').text();
+        document.getElementById('welcomeMessage').innerHTML = "Welcome " + userName + "!"; // Update the welcome message
+        document.getElementById('barcode-scanner').style.display = 'none';
+        // Additional code to handle the scanned barcode
+    }
 
     function displayMenuForDate(date) {
         const dateString = date.toLocaleDateString('en-US', {
@@ -875,6 +975,7 @@
     });
     function startScanner() {
         document.getElementById('barcode-scanner').style.display = 'flex';
+<<<<<<< HEAD
         Quagga.init({
             inputStream: {
                 name: "Live",
@@ -910,7 +1011,11 @@
             Quagga.stop();
             // Continue with other necessary actions
         });
+=======
+>>>>>>> e7b71ca2ebf48c985db316dfde3560601f8a2f84
     }
+
+
 
     document.getElementById('submitFeedbackButton').addEventListener('click', function () {
         // your existing feedback submission code
