@@ -22,71 +22,6 @@
             });
         });
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Define a dictionary for students with IDs and names
-            const students = {
-                'Ryan': 'Ryan Chen',
-                'Grissom': 'Grissom Ting',
-                'Jeff': 'Jefferson',
-                'Mr.jaeger': 'Mr. Jaeger',
-                'Allen Chen': 'Allen Chen',
-                'Samuel': 'Samuel Chen',
-                'Mr.ottmar': 'Ottmar',
-                'TooTallEagle': 'Eagle Lee',
-                'Green hat': 'Tim Chen',
-                'Gina': 'Gina',
-                'Mr. Perez': 'Mr. Perez',
-                'Eason': 'Eason Kuo',
-                'Tony' : 'Tony Ding',
-                'Brad' : 'Brad Lin',
-                'Mr.Loi' : 'Mr. Loi',
-                'Mr. Cam' : 'Cameren Murphy',
-                'Eugene' : 'Eugene Gau',
-                'Oscar' : 'Oscar Chiu',
-                // Add more students as needed
-            };
-
-            const userIDSelect = document.getElementById('userID');
-
-            // Clear existing options
-            userIDSelect.innerHTML = '';
-
-            // Add default option
-            const defaultOption = document.createElement('option');
-            defaultOption.value = '';
-            defaultOption.textContent = 'Select name';
-            userIDSelect.appendChild(defaultOption);
-
-            // Populate options from the 'students' dictionary
-            for (const id in students) {
-                const option = document.createElement('option');
-                option.value = id;
-                option.textContent = students[id];
-                userIDSelect.appendChild(option);
-            }
-
-            // Initialize Select2
-            $('#userID').select2({
-                placeholder: "Select a name",
-                allowClear: true,
-                theme: "classic"
-            });
-        });
-
-        document.getElementById('confirmIDButton').addEventListener('click', function () {
-            var userID = document.getElementById('userID').value;
-            var userName = $('#userID option:selected').text(); // Get the selected user's name
-            if (userID === "") {
-                alert("Please select your ID.");
-            } else {
-                document.getElementById('welcomeMessage').innerHTML = "Welcome " + userName + "!"; // Update the welcome message
-                // Hide the scanner and ID input, or perform other actions as needed
-                document.getElementById('barcode-scanner').style.display = 'none';
-                // Enable other parts of the page for feedback submission
-            }
-        });
-    </script>
 
     <style>
         .select2-container--open .select2-dropdown {
@@ -696,16 +631,6 @@
 
     <div id="welcomeMessage" style="font-size: 60px; color: rgb(6, 6, 6); margin-top: 20px;"></div>
     <div id="barcode-scanner">
-<<<<<<< HEAD
-        <div id="interactive" class="viewport"></div>
-        <div>
-            <label for="userID" style="display: block; margin-bottom: 10px;">Select Your ID/Name:</label>
-            <select id="userID" name="userID" style="width: 50%;">
-                <!-- Replace these options with actual user IDs -->
-               <!-- Add more options as needed -->
-            </select>
-            <button id="confirmIDButton" style="margin-top: 10px;"><b>Confirm ID/NAME</b></button>
-=======
         <div style="text-align: center; padding: 20px;">
             <h2 style="color:#ffffff; font-size: 36px; margin-bottom: 20px;">Step 1</h2>
             <h1 style="color:#ffffff; margin-bottom: 50px;">Please use the barcode scanner to scan the barcode on your
@@ -721,7 +646,6 @@
                 </select>
                 <button id="confirmIDButton" style="padding: 10px 15px;"><b>Confirm Name</b></button>
             </div>
->>>>>>> e7b71ca2ebf48c985db316dfde3560601f8a2f84
         </div>
     </div>
     <div class="popup" id="successPopup">
@@ -861,14 +785,6 @@
             // Enable other parts of the page for feedback submission
         }
     });
-
-    document.getElementById('goToScannerButton').addEventListener('click', function () {
-        // Add code to navigate to the second page or toggle its visibility
-        document.getElementById('barcode-scanner').style.display = 'flex';
-        document.getElementById('second-page-container').style.display = 'none'; // Adjust the container ID accordingly
-        startScanner(); // Restart the scanner
-    });
-
     document.addEventListener('DOMContentLoaded', function () {
         // Get today's date in the format "MM-DD-YYYY"
 
@@ -901,6 +817,9 @@
             e.preventDefault();
 
             // Process the scanned barcode data
+
+            barcodeData = barcodeData.replace('Shift', '').replace('Enter', '');
+            console.log(barcodeData.trim())
             processBarcodeData(barcodeData.trim());
         }
     }
@@ -975,44 +894,6 @@
     });
     function startScanner() {
         document.getElementById('barcode-scanner').style.display = 'flex';
-<<<<<<< HEAD
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                target: document.querySelector('#interactive'), // Pass the target element
-                constraints: {
-                    facingMode: "enviroment" // Use the back camera
-                }
-            },
-            decoder: {
-                readers: ["code_128_reader", "qrcode_reader"]// Specify the barcode formats to decode
-                // Add more readers as needed
-            },
-            locate: true // Enable locating of the barcode in the image
-        }, function (err) {
-            if (err) {
-                console.error(err);
-                alert("Error starting QuaggaJS: " + err.message);
-                return;
-            }
-            Quagga.start();
-        });
-
-        Quagga.onDetected(function (data) {
-            var userID = data.text(); // Assuming the ID is in the barcode data
-            if (userID === "") {
-                alert("Please select your ID.");
-            } else {
-                document.getElementById('welcomeMessage').innerHTML = "Welcome " + userID + "!";
-                document.getElementById('barcode-scanner').style.display = 'none';
-                // Enable other parts of the page for feedback submission
-            }
-            Quagga.stop();
-            // Continue with other necessary actions
-        });
-=======
->>>>>>> e7b71ca2ebf48c985db316dfde3560601f8a2f84
     }
 
 
