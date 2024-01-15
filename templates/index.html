@@ -754,17 +754,20 @@
                             const name = match[4]; // Extracted name
                             const id = match[5]; // Extracted ID
 
-                            // Split the name by the first comma only
-                            const [surname, firstNameAndNickname] = name.split(/,(.+)/);
-                            if (surname && firstNameAndNickname) {
-                                const fullName = `${firstNameAndNickname.trim()} ${surname.trim()}`;
-
-                                const option = document.createElement('option');
-                                option.value = id.trim();
-                                option.textContent = fullName;
-                                document.getElementById('userID').appendChild(option);
+                            let fullName;
+                            if (name.includes(',')) {
+                                const [surname, firstNameAndNickname] = name.split(/,(.+)/);
+                                fullName = `${firstNameAndNickname.trim()} ${surname.trim()}`;
+                            } else {
+                                fullName = name;
                             }
+
+                            const option = document.createElement('option');
+                            option.value = id.trim();
+                            option.textContent = fullName;
+                            document.getElementById('userID').appendChild(option);
                         }
+
                     }
                 });
             })
@@ -816,10 +819,9 @@
             // Prevent the default action to avoid form submission
             e.preventDefault();
 
-            // Process the scanned barcode data
-
             barcodeData = barcodeData.replace('Shift', '').replace('Enter', '');
-            console.log(barcodeData.trim())
+
+            // Process the scanned barcode data
             processBarcodeData(barcodeData.trim());
         }
     }
