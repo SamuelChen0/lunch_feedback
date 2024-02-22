@@ -429,49 +429,6 @@
             color: rgb(5, 5, 5);
         }
 
-        #submitWithoutFeedbackButton {
-            position: relative;
-            z-index: 0;
-            min-width: 200px;
-            border: 2px solid currentColor;
-            border-radius: 48px;
-            color: #FF0FF0;
-            font-size: 1rem;
-            text-align: center;
-            text-decoration: none;
-            overflow: hidden;
-            transition: 0.2s transform ease-in-out;
-            will-change: transform;
-            padding: 10px 20px;
-        }
-
-        #submitWithoutFeedbackButton:after {
-            content: '';
-            display: block;
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            left: 0;
-            top: 0;
-            z-index: -1;
-            background-color: #ff0ff0;
-            border-radius: 3rem;
-            transform: translate(-100%, 0) rotate(10deg);
-            transform-origin: top left;
-            transition: 0.2s transform ease-out;
-            will-change: transform;
-        }
-
-        #submitWithoutFeedbackButton:hover:after {
-            transform: translate(0, 0);
-        }
-
-        #submitWithoutFeedbackButton:hover {
-            border: 2px solid transparent;
-            color: #FFFFFF;
-            transform: scale(1.05);
-            will-change: transform;
-        }
 
 
         #submitFeedbackButton {
@@ -660,9 +617,9 @@
             <span class="close-button" id="closePopup">X</span>
             <p id="selectedRating"></p> <!-- Place to display the selected rating -->
             <p>Suggestion/Complaint (optional)</p>
-            <input type="text" id="popupTextInput" placeholder="Enter your text">
+            <input type="text" id="popupTextInput" placeholder="Enter your text (optional)">
             <button id="submitFeedbackButton">Submit</button>
-            <button id="submitWithoutFeedbackButton">Submit without Feedback</button>
+            
         </div>
     </div>
 
@@ -901,10 +858,7 @@
         startScanner(); // Restart the scanner after feedback is submitted
     });
 
-    document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
-        // your existing feedback submission code
-        startScanner(); // Restart the scanner after feedback is submitted
-    });
+
 
 
 
@@ -956,37 +910,7 @@
     const submitButton = document.getElementById('submitFeedbackButton');
 
 
-    // Event listener for the new "Submit without Feedback" button
-    document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
-        const rating = parseInt(submitButton.getAttribute('data-rating'));
-        const userIDInput = document.getElementById('userID'); // Get user ID input field
-        const userID = userIDInput.value.trim(); // Get user ID from input field
-        if (userID === "") {
-            alert("Please enter your ID before submitting feedback.");
-            return;
-        }
 
-        // Get the current date
-        const currentDate = new Date().toISOString();
-
-        // Reference to the "feedback" node in the database
-        const feedbackRef = firebase.database().ref('feedback')
-
-        // Write only rating and date to the database
-        feedbackRef.push({ rating: rating, userID: userID, date: currentDate })
-            .then(() => {
-                console.log('Rating and ID successfully written to the database');
-                popup.style.display = "none";
-                feedbackInput.value = ''; // Clear the input field
-                userIDInput.value = ''; // Clear the ID input field
-                showSuccessPopupAndCloseAfterTwoSeconds();
-                startScanner();
-                // Your existing code to update click count or other UI elements as necessary
-            })
-            .catch((error) => {
-                console.error('Error writing rating and ID to the database: ', error);
-            });
-    });
 
     // Event listener for the "Submit" button
     submitButton.addEventListener('click', function () {
