@@ -970,56 +970,73 @@
     const feedbackInput = document.getElementById('popupTextInput');
     const submitButton = document.getElementById('submitFeedbackButton');
     
-// Event listener for the "Submit" button
     submitButton.addEventListener('click', function () {
-        const rating = parseInt(submitButton.getAttribute('data-rating'));
-        const feedback = feedbackInput.value.trim(); // Get feedback comment from input field
-        const userID = document.getElementById('userID').value.trim(); // Get user ID from input field
+    const rating = parseInt(submitButton.getAttribute('data-rating'));
+    const feedback = feedbackInput.value.trim(); // Get feedback comment from input field
+    const userID = document.getElementById('userID').value.trim(); // Get user ID from input field
 
-        if (userID === "") {
-            alert("Please enter your ID before submitting feedback.");
-            return;
-        }
+    if (userID === "") {
+        alert("Please enter your ID before submitting feedback.");
+        return;
+    }
 
-        // Get the current date
-        const currentDate = new Date().toISOString();
+    // Get the current date
+    const currentDate = new Date().toDateString(); // Convert to date string for comparison
 
-        // Reference to the "feedback" node in the database
-        const feedbackRef = firebase.database().ref('feedback');
+    // Reference to the "feedback" node in the database
+    const feedbackRef = firebase.database().ref('feedback');
 
-        //fetch entry from db with given userID + date
-        
+    //fetch entry from db with given userID + date
+    const query = feedbackRef.orderByChild('userID').equalTo(userID);
+    query.once('value')
+        .then(snapshot => {
+            let exists = false;
+            snapshot.forEach(childSnapshot => {
+                const feedbackData = childSnapshot.val();
+                const feedbackDate = new Date(feedbackData.date).toDateString(); // Convert to date string for comparison
 
-        //if doesnt exist set boolean to false
-        
-
-        // Write rating, feedback, user ID, and date to the database
-        feedbackRef.push({ rating: rating, feedback: feedback, userID: userID, date: currentDate })
-            .then(() => {
-                console.log('Rating, feedback, and ID successfully written to the database');
-                popup.style.display = "none";
-                feedbackInput.value = ''; // Clear the input field
-                document.getElementById('userID').value = ''; // Clear the ID input field
-                showSuccessPopupAndCloseAfterTwoSeconds();
-                startScanner();
-                // Your existing code to update click count or other UI elements as necessary
-                if (snapshot.exists()) {
-                    alert("You already played the game!");
+                // Check if the feedback date is within the same day
+                if (feedbackDate === currentDate) {
+                    // Feedback already exists for today
+                    exists = true;
                 }
-            })
-            .catch((error) => {
-                console.error('Error writing rating, feedback, and ID to the database: ', error);
             });
-    });
 
-    function showSuccessPopupAndCloseAfterTwoSeconds() {
+            // Now you have the exists variable indicating if entry exists or not
+            console.log('Entry exists:', exists);
+
+            // Write rating, feedback, user ID, and date to the database
+            feedbackRef.push({ rating: rating, feedback: feedback, userID: userID, date: new Date().toISOString() })
+                .then(() => {
+                    console.log('Rating, feedback, and ID successfully written to the database');
+                    popup.style.display = "none";
+                    feedbackInput.value = ''; // Clear the input field
+                    document.getElementById('userID').value = ''; // Clear the ID input field
+                    showSuccessPopupAndCloseAfterTwoSeconds(exists);
+                    startScanner();
+                    // Your existing code to update click count or other UI elements as necessary
+                    if (exists) {
+                        alert("You already played the game!");
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error writing rating, feedback, and ID to the database: ', error);
+                });
+        })
+        .catch(error => {
+            console.error('Error fetching feedback data from the database:', error);
+        });
+});
+
+function showSuccessPopupAndCloseAfterTwoSeconds(exists) {
     const successPopup = document.getElementById("successPopup");
     successPopup.style.display = "block";
 
     // Close the success popup after two seconds
     setTimeout(function () {
         successPopup.style.display = "none";
-        fetch('/rungame')
+        if (!exists) {
+            fetch('/rungame')
                 .then(response => {
                     if (response.ok) {
                         console.log('Java game started!');
@@ -1030,6 +1047,7 @@
                 .catch(error => {
                     console.error('Error starting Java game:', error);
                 });
+        }
     }, 2000); // 2000 milliseconds (2 seconds)
 }
 
