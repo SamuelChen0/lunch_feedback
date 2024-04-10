@@ -602,14 +602,25 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
+        // const firebaseConfig = {
+        //     apiKey: "AIzaSyBkRztWoH2RIb9LwMB9yB2yzfFFBVacxag",
+        //     authDomain: "lunch-feedback.firebaseapp.com",
+        //     projectId: "lunch-feedback",
+        //     storageBucket: "lunch-feedback.appspot.com",
+        //     messagingSenderId: "1030662462935",
+        //     appId: "1:1030662462935:web:bc1e374f3484d3a0a8bf92",
+        //     measurementId: "G-JLBS8GVJ5J"
+        // };
+
         const firebaseConfig = {
-            apiKey: "AIzaSyBkRztWoH2RIb9LwMB9yB2yzfFFBVacxag",
-            authDomain: "lunch-feedback.firebaseapp.com",
-            projectId: "lunch-feedback",
-            storageBucket: "lunch-feedback.appspot.com",
-            messagingSenderId: "1030662462935",
-            appId: "1:1030662462935:web:bc1e374f3484d3a0a8bf92",
-            measurementId: "G-JLBS8GVJ5J"
+            apiKey: "AIzaSyCYDYQn11Lo3-oUStmX23VaHDLhZXDyhhc",
+            authDomain: "lunchfeedback-3d60b.firebaseapp.com",
+            databaseURL: "https://lunchfeedback-3d60b-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "lunchfeedback-3d60b",
+            storageBucket: "lunchfeedback-3d60b.appspot.com",
+            messagingSenderId: "39937676265",
+            appId: "1:39937676265:web:638b2a2e5a62062c93f178",
+            measurementId: "G-SQC89ZQVH8"
         };
 
         firebase.initializeApp(firebaseConfig)
@@ -964,51 +975,62 @@
 
     // Event listener for the "Submit" button
     submitButton.addEventListener('click', function () {
-        const rating = parseInt(submitButton.getAttribute('data-rating'));
-        const feedback = feedbackInput.value.trim(); // Get feedback comment from input field
-        const userID = document.getElementById('userID').value.trim(); // Get user ID from input field
+    const rating = parseInt(submitButton.getAttribute('data-rating'));
+    const feedback = feedbackInput.value.trim(); // Get feedback comment from input field
+    const userID = document.getElementById('userID').value.trim(); // Get user ID from input field
 
-        if (userID === "") {
-            alert("Please enter your ID before submitting feedback.");
-            return;
-        }
-
-        // Get the current date
-        const currentDate = new Date().toISOString();
-
-        // Reference to the "feedback" node in the database
-        const feedbackRef = firebase.database().ref('feedback');
-
-        // Write rating, feedback, user ID, and date to the database
-        feedbackRef.push({ rating: rating, feedback: feedback, userID: userID, date: currentDate })
-            .then(() => {
-                console.log('Rating, feedback, and ID successfully written to the database');
-                popup.style.display = "none";
-                feedbackInput.value = ''; // Clear the input field
-                document.getElementById('userID').value = ''; // Clear the ID input field
-                showSuccessPopupAndCloseAfterTwoSeconds();
-                startScanner();
-                // Your existing code to update click count or other UI elements as necessary
-            })
-            .catch((error) => {
-                console.error('Error writing rating, feedback, and ID to the database: ', error);
-            });
-    });
-    function showSuccessPopupAndCloseAfterTwoSeconds() {
-        const successPopup = document.getElementById("successPopup");
-        successPopup.style.display = "block";
-
-        // Close the success popup after two seconds
-        setTimeout(function () {
-            successPopup.style.display = "none";
-        }, 2000); // 2000 milliseconds (2 seconds)
+    if (userID === "") {
+        alert("Please enter your ID before submitting feedback.");
+        return;
     }
-    document.getElementById('clickButton5').addEventListener('click', function () {
-        const popup = document.getElementById("popup");
-        submitButton.setAttribute('data-rating', 5);
-        popup.style.display = "block";
 
-    });
+    // Get the current date
+    const currentDate = new Date().toISOString();
+
+    // Reference to the "feedback" node in the database
+    const feedbackRef = firebase.database().ref('feedback');
+
+    // Write rating, feedback, user ID, and date to the database
+    feedbackRef.push({ rating: rating, feedback: feedback, userID: userID, date: currentDate })
+        .then(() => {
+            console.log('Rating, feedback, and ID successfully written to the database');
+            popup.style.display = "none";
+            feedbackInput.value = ''; // Clear the input field
+            document.getElementById('userID').value = ''; // Clear the ID input field
+            showSuccessPopupAndCloseAfterTwoSeconds();
+            // Your existing code to update click count or other UI elements as necessary
+        })
+        .catch((error) => {
+            console.error('Error writing rating, feedback, and ID to the database: ', error);
+        });
+});
+
+function showSuccessPopupAndCloseAfterTwoSeconds() {
+    const successPopup = document.getElementById("successPopup");
+    successPopup.style.display = "block";
+
+    // Close the success popup after two seconds
+    setTimeout(function () {
+        successPopup.style.display = "none";
+
+        // Only start the game if the user has not submitted feedback
+        const userID = document.getElementById('userID').value.trim();
+        if (!userID) {
+            // Make an AJAX request to the Flask route to start the game
+            fetch('/rungame')
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Java game started!');
+                    } else {
+                        console.error('Failed to start Java game:', response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error starting Java game:', error);
+                });
+        }
+    }, 2000); // 2000 milliseconds (2 seconds)
+}
 
 
     function displayRating(rating) {
