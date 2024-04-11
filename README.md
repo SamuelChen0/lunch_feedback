@@ -34,7 +34,7 @@ The Lunch Feedback WebApp is a Python-based application designed to collect feed
 3. Create a virtual environment and activate it:
    ```sh
    python3 -m venv env
-   source env/bin/activate  # On Windows, use `env\Scripts\activate`
+   env\Scripts\activate # On Mac IOS, use ` source env/bin/activate`
    ```
 
 4. Install the necessary packages:
