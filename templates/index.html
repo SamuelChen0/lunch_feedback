@@ -1040,6 +1040,13 @@ function showSuccessPopupAndCloseAfterTwoSeconds(exists) {
                 .then(response => {
                     if (response.ok) {
                         console.log('Java game started!');
+                        
+                        // After 60 seconds, stop the game
+                        setTimeout(function() {
+                            console.log('Game stopped after 60 seconds');
+                            // Add code here to stop the game
+                        }, 60000); // 60000 milliseconds (60 seconds)
+                        
                     } else {
                         console.error('Failed to start Java game:', response.statusText);
                     }
@@ -1050,6 +1057,7 @@ function showSuccessPopupAndCloseAfterTwoSeconds(exists) {
         }
     }, 2000); // 2000 milliseconds (2 seconds)
 }
+
 
 
 
