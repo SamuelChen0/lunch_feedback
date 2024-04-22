@@ -19,6 +19,28 @@ The Lunch Feedback WebApp is a Python-based application designed to collect feed
 - Pip (Python package installer)
 - Virtual environment (recommended)
 
+### Getting the Java Commmand
+1. Clone this repository:
+  ```sh
+   git clone https://github.com/rentsdue/PlatformGameProject.git
+   ```
+2. Go to the "lunch_feedback_edition" branch of the repository.
+3. Click "run" on Visual Studio Code.
+4. Copy the command that is used to run the game, and then format it like this:
+  ```sh
+   command = [
+    r'C:\Program Files\Eclipse Adoptium\jdk-21.0.2.13-hotspot\bin\java.exe',
+    # Java VM Option
+    '-XX:+ShowCodeDetailsInExceptionMessages',
+    # Classpath Option
+    '-cp',
+    # Classpath Value
+    r'C:\Users\admin\PlatformGameProject\bin',
+    # Main Class to Run
+    'main.java.com.example.Main'
+]
+   ```
+
 ### Installation Steps
 
 1. Clone the repository:
