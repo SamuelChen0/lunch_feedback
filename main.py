@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+import os
 import subprocess
 import threading
 import time
@@ -11,19 +12,21 @@ import subprocess
 
 def run_game():
     global game_process
-    # This java command needs to be changed since it is different for every single device
-    java_command = [
-    # Java Executable Path
-       r'C:\Program Files\Java\jdk-21\bin\java.exe',
-    # Java VM Option
-    '-XX:+ShowCodeDetailsInExceptionMessages',
-    # Classpath Option
-    '-cp',
-    # Classpath Value
-    r'C:\Users\alfee\PlatformGameProject\bin',
-    # Main Class to Run
-    'main.java.com.example.Main'
-]
+
+    # Retrieve the Java command from the environment variable
+    java_command = os.getenv('JAVA_COMMAND')
+
+    # Check if the environment variable is set
+    if java_command is None:
+        print("Error: JAVA_COMMAND environment variable is not set.")
+        return
+
+    # Run the Java command
+    try:
+        game_process = subprocess.Popen(java_command, shell=True)
+        game_process.wait()  # Wait for the process to finish
+    except Exception as e:
+        print("Error running the game:", e)
 
     game_process = subprocess.Popen(java_command)
 
