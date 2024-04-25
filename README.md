@@ -40,7 +40,7 @@ The Lunch Feedback WebApp is a Python-based application designed to collect feed
     'main.java.com.example.Main'
 ]
    ```
-5. Go to the .env file and copy the command into "JAVA_COMMAND"
+5. Create a .env file and copy the command into "JAVA_COMMAND"
 
 ### Installation Steps
 
