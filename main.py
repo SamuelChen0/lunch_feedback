@@ -31,7 +31,7 @@ def run_game():
     game_process = subprocess.Popen(java_command)
 
 def close_game_after_timeout():
-    time.sleep(60)  # Change this to 60 seconds later
+    time.sleep(60)  # Change this to 70 seconds later
     if game_process and game_process.poll() is None:  # If the game process is still running
         game_process.terminate()  # Terminate the game process
 
