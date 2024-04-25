@@ -401,7 +401,7 @@
         }
 
         .image-button {
-            background: linear-gradient(to bottom, #4CAF50, #45a049);
+            background: transparent;
             color: white;
             border: none;
             cursor: pointer;
@@ -412,6 +412,7 @@
         }
 
         .image-button:hover {
+            background: linear-gradient(to bottom, #4CAF50, #45a049);
             transform: scale(1.1);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
@@ -430,49 +431,6 @@
             color: rgb(5, 5, 5);
         }
 
-        #submitWithoutFeedbackButton {
-            position: relative;
-            z-index: 0;
-            min-width: 200px;
-            border: 2px solid currentColor;
-            border-radius: 48px;
-            color: #FF0FF0;
-            font-size: 1rem;
-            text-align: center;
-            text-decoration: none;
-            overflow: hidden;
-            transition: 0.2s transform ease-in-out;
-            will-change: transform;
-            padding: 10px 20px;
-        }
-
-        #submitWithoutFeedbackButton:after {
-            content: '';
-            display: block;
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            left: 0;
-            top: 0;
-            z-index: -1;
-            background-color: #ff0ff0;
-            border-radius: 3rem;
-            transform: translate(-100%, 0) rotate(10deg);
-            transform-origin: top left;
-            transition: 0.2s transform ease-out;
-            will-change: transform;
-        }
-
-        #submitWithoutFeedbackButton:hover:after {
-            transform: translate(0, 0);
-        }
-
-        #submitWithoutFeedbackButton:hover {
-            border: 2px solid transparent;
-            color: #FFFFFF;
-            transform: scale(1.05);
-            will-change: transform;
-        }
 
 
         #submitFeedbackButton {
@@ -646,14 +604,25 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
+        // const firebaseConfig = {
+        //     apiKey: "AIzaSyBkRztWoH2RIb9LwMB9yB2yzfFFBVacxag",
+        //     authDomain: "lunch-feedback.firebaseapp.com",
+        //     projectId: "lunch-feedback",
+        //     storageBucket: "lunch-feedback.appspot.com",
+        //     messagingSenderId: "1030662462935",
+        //     appId: "1:1030662462935:web:bc1e374f3484d3a0a8bf92",
+        //     measurementId: "G-JLBS8GVJ5J"
+        // };
+
         const firebaseConfig = {
-            apiKey: "AIzaSyBkRztWoH2RIb9LwMB9yB2yzfFFBVacxag",
-            authDomain: "lunch-feedback.firebaseapp.com",
-            projectId: "lunch-feedback",
-            storageBucket: "lunch-feedback.appspot.com",
-            messagingSenderId: "1030662462935",
-            appId: "1:1030662462935:web:bc1e374f3484d3a0a8bf92",
-            measurementId: "G-JLBS8GVJ5J"
+            apiKey: "AIzaSyCYDYQn11Lo3-oUStmX23VaHDLhZXDyhhc",
+            authDomain: "lunchfeedback-3d60b.firebaseapp.com",
+            databaseURL: "https://lunchfeedback-3d60b-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "lunchfeedback-3d60b",
+            storageBucket: "lunchfeedback-3d60b.appspot.com",
+            messagingSenderId: "39937676265",
+            appId: "1:39937676265:web:638b2a2e5a62062c93f178",
+            measurementId: "G-SQC89ZQVH8"
         };
 
         firebase.initializeApp(firebaseConfig)
@@ -757,9 +726,9 @@
             <span class="close-button" id="closePopup">X</span>
             <p id="selectedRating"></p> <!-- Place to display the selected rating -->
             <p>Suggestion/Complaint (optional)</p>
-            <input type="text" id="popupTextInput" placeholder="Enter your text">
+            <input type="text" id="popupTextInput" placeholder="Enter your text (optional)">
             <button id="submitFeedbackButton">Submit</button>
-            <button id="submitWithoutFeedbackButton">Submit without Feedback</button>
+            
         </div>
     </div>
 
@@ -852,17 +821,20 @@
                             const name = match[4]; // Extracted name
                             const id = match[5]; // Extracted ID
 
-                            // Split the name by the first comma only
-                            const [surname, firstNameAndNickname] = name.split(/,(.+)/);
-                            if (surname && firstNameAndNickname) {
-                                const fullName = `${firstNameAndNickname.trim()} ${surname.trim()}`;
-
-                                const option = document.createElement('option');
-                                option.value = id.trim();
-                                option.textContent = fullName;
-                                document.getElementById('userID').appendChild(option);
+                            let fullName;
+                            if (name.includes(',')) {
+                                const [surname, firstNameAndNickname] = name.split(/,(.+)/);
+                                fullName = `${firstNameAndNickname.trim()} ${surname.trim()}`;
+                            } else {
+                                fullName = name;
                             }
+
+                            const option = document.createElement('option');
+                            option.value = id.trim();
+                            option.textContent = fullName;
+                            document.getElementById('userID').appendChild(option);
                         }
+
                     }
                 });
             })
@@ -913,6 +885,8 @@
         if (e.key === 'Enter') {
             // Prevent the default action to avoid form submission
             e.preventDefault();
+
+            barcodeData = barcodeData.replace('Shift', '').replace('Enter', '');
 
             // Process the scanned barcode data
 
@@ -1001,10 +975,7 @@
         startScanner(); // Restart the scanner after feedback is submitted
     });
 
-    document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
-        // your existing feedback submission code
-        startScanner(); // Restart the scanner after feedback is submitted
-    });
+
 
 
 
@@ -1054,89 +1025,162 @@
     const popup = document.getElementById("popup");
     const feedbackInput = document.getElementById('popupTextInput');
     const submitButton = document.getElementById('submitFeedbackButton');
-
-
-    // Event listener for the new "Submit without Feedback" button
-    document.getElementById('submitWithoutFeedbackButton').addEventListener('click', function () {
-        const rating = parseInt(submitButton.getAttribute('data-rating'));
-        const userIDInput = document.getElementById('userID'); // Get user ID input field
-        const userID = userIDInput.value.trim(); // Get user ID from input field
-        if (userID === "") {
-            alert("Please enter your ID before submitting feedback.");
-            return;
-        }
-
-        // Get the current date
-        const currentDate = new Date().toISOString();
-
-        // Reference to the "feedback" node in the database
-        const feedbackRef = firebase.database().ref('feedback')
-
-        // Write only rating and date to the database
-        feedbackRef.push({ rating: rating, userID: userID, date: currentDate })
-            .then(() => {
-                console.log('Rating and ID successfully written to the database');
-                popup.style.display = "none";
-                feedbackInput.value = ''; // Clear the input field
-                userIDInput.value = ''; // Clear the ID input field
-                showSuccessPopupAndCloseAfterTwoSeconds();
-                startScanner();
-                // Your existing code to update click count or other UI elements as necessary
-            })
-            .catch((error) => {
-                console.error('Error writing rating and ID to the database: ', error);
-            });
-    });
-
-    // Event listener for the "Submit" button
+    
     submitButton.addEventListener('click', function () {
-        const rating = parseInt(submitButton.getAttribute('data-rating'));
-        const feedback = feedbackInput.value.trim(); // Get feedback comment from input field
-        const userID = document.getElementById('userID').value.trim(); // Get user ID from input field
+    const rating = parseInt(submitButton.getAttribute('data-rating'));
+    const feedback = feedbackInput.value.trim(); // Get feedback comment from input field
+    const userID = document.getElementById('userID').value.trim(); // Get user ID from input field
 
-        if (userID === "") {
-            alert("Please enter your ID before submitting feedback.");
-            return;
+    if (userID === "") {
+        alert("Please enter your ID before submitting feedback.");
+        return;
+    }
+
+    // Get the current date
+    const currentDate = new Date().toDateString(); // Convert to date string for comparison
+
+    // Reference to the "feedback" node in the database
+    const feedbackRef = firebase.database().ref('feedback');
+
+    //fetch entry from db with given userID + date
+    const query = feedbackRef.orderByChild('userID').equalTo(userID);
+    query.once('value')
+        .then(snapshot => {
+            let exists = false;
+            snapshot.forEach(childSnapshot => {
+                const feedbackData = childSnapshot.val();
+                const feedbackDate = new Date(feedbackData.date).toDateString(); // Convert to date string for comparison
+
+                // Check if the feedback date is within the same day
+                if (feedbackDate === currentDate) {
+                    // Feedback already exists for today
+                    exists = true;
+                }
+            });
+
+            // Now you have the exists variable indicating if entry exists or not
+            console.log('Entry exists:', exists);
+
+            // Write rating, feedback, user ID, and date to the database
+            feedbackRef.push({ rating: rating, feedback: feedback, userID: userID, date: new Date().toISOString() })
+                .then(() => {
+                    console.log('Rating, feedback, and ID successfully written to the database');
+                    popup.style.display = "none";
+                    feedbackInput.value = ''; // Clear the input field
+                    document.getElementById('userID').value = ''; // Clear the ID input field
+                    showSuccessPopupAndCloseAfterTwoSeconds(exists);
+                    startScanner();
+                    // Your existing code to update click count or other UI elements as necessary
+                    if (exists) {
+                        alert("You already played the game!");
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error writing rating, feedback, and ID to the database: ', error);
+                });
+        })
+        .catch(error => {
+            console.error('Error fetching feedback data from the database:', error);
+        });
+});
+
+function showSuccessPopupAndCloseAfterTwoSeconds(exists) {
+    const successPopup = document.getElementById("successPopup");
+    successPopup.style.display = "block";
+
+    // Close the success popup after two seconds
+    setTimeout(function () {
+        successPopup.style.display = "none";
+        if (!exists) {
+            fetch('/rungame')
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Java game started!');
+                        
+                        // After 60 seconds, stop the game
+                        setTimeout(function() {
+                            console.log('Game stopped after 60 seconds');
+                            // Add code here to stop the game
+                        }, 60000); // 60000 milliseconds (60 seconds)
+                        
+                    } else {
+                        console.error('Failed to start Java game:', response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error starting Java game:', error);
+                });
+        }
+    }, 2000); // 2000 milliseconds (2 seconds)
+}
+
+
+
+
+    function displayRating(rating) {
+        const popup = document.getElementById("popup");
+        const ratingDisplay = document.getElementById("selectedRating");
+
+        // Clear the existing content in ratingDisplay
+        ratingDisplay.innerHTML = "";
+
+        // Create stars dynamically based on the rating and make them initially invisible
+        for (let i = 0; i < 5; i++) {
+            const starIcon = document.createElement("i");
+            starIcon.className = "fa fa-star";
+            starIcon.style.color = "gold";
+            starIcon.style.visibility = i < rating ? "visible" : "hidden";
+            ratingDisplay.appendChild(starIcon);
         }
 
-        // Get the current date
-        const currentDate = new Date().toISOString();
+        // Update the rating display with the user ID
+        const userID = document.getElementById('userID').value.trim();
+        ratingDisplay.innerHTML += "<br>ID: " + userID;
 
-        // Reference to the "feedback" node in the database
-        const feedbackRef = firebase.database().ref('feedback');
-
-        // Write rating, feedback, user ID, and date to the database
-        feedbackRef.push({ rating: rating, feedback: feedback, userID: userID, date: currentDate })
-            .then(() => {
-                console.log('Rating, feedback, and ID successfully written to the database');
-                popup.style.display = "none";
-                feedbackInput.value = ''; // Clear the input field
-                document.getElementById('userID').value = ''; // Clear the ID input field
-                showSuccessPopupAndCloseAfterTwoSeconds();
-                startScanner();
-                // Your existing code to update click count or other UI elements as necessary
-            })
-            .catch((error) => {
-                console.error('Error writing rating, feedback, and ID to the database: ', error);
-            });
-    });
-    function showSuccessPopupAndCloseAfterTwoSeconds() {
-        const successPopup = document.getElementById("successPopup");
-        successPopup.style.display = "block";
-
-        // Close the success popup after two seconds
+        // Trigger the blinking effect
+        blinkRatingButtons();
+        // Wait for the blinking effect to finish (adjust the timeout duration as needed)
         setTimeout(function () {
-            successPopup.style.display = "none";
-        }, 2000); // 2000 milliseconds (2 seconds)
+            popup.style.display = "block";
+        }, 1000); // Adjust the timeout duration (in milliseconds) as needed
     }
-    document.getElementById('clickButton5').addEventListener('click', function () {
-        const popup = document.getElementById("popup");
-        submitButton.setAttribute('data-rating', 5);
-        popup.style.display = "block";
+    
+    function blinkRatingButtons() {
+        const ratingButtons = document.querySelectorAll('.image-button');
+        ratingButtons.forEach(button => {
+            button.classList.add('blinking'); // Add a CSS class for blinking effect
+            setTimeout(() => {
+                button.classList.remove('blinking'); // Remove the blinking class after a timeout
+            }, 1000); // Adjust the timeout duration (in milliseconds) as needed
+        });
+    }
 
+
+    document.getElementById('clickButton1').addEventListener('click', function () {
+    displayRating(1);
+    blinkRatingButtons(); // Call the blinking function
     });
 
+    document.getElementById('clickButton2').addEventListener('click', function () {
+        displayRating(2);
+        blinkRatingButtons(); // Call the blinking function
+    });
 
+    document.getElementById('clickButton3').addEventListener('click', function () {
+        displayRating(3);
+        blinkRatingButtons(); // Call the blinking function
+    });
+
+    document.getElementById('clickButton4').addEventListener('click', function () {
+        displayRating(4);
+        blinkRatingButtons(); // Call the blinking function
+    });
+
+    document.getElementById('clickButton5').addEventListener('click', function () {
+        displayRating(5);
+        blinkRatingButtons(); // Call the blinking function
+    });
+    // Function to display the suggestion part after clicking a rating button
     function displayRating(rating) {
         const popup = document.getElementById("popup");
         const ratingDisplay = document.getElementById("selectedRating");
