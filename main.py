@@ -1,39 +1,46 @@
 from flask import Flask, render_template
-import os
 import subprocess
 import threading
 import time
+import os
+import sys
 
 app = Flask(__name__)
 
 game_process = None
-
-import subprocess
+cleanup_done = False
 
 def run_game():
     global game_process
-
-    # Retrieve the Java command from the environment variable
-    java_command = os.getenv('JAVA_COMMAND')
-
-    # Check if the environment variable is set
-    if java_command is None:
-        print("Error: JAVA_COMMAND environment variable is not set.")
-        return
-
-    # Run the Java command
-    try:
-        game_process = subprocess.Popen(java_command, shell=True)
-        game_process.wait()  # Wait for the process to finish
-    except Exception as e:
-        print("Error running the game:", e)
+    
+    # Get the directory path of your compiled Java files on PythonAnywhere
+    java_files_directory = os.path.join(sys.path[0], 'PlatformGameProject', 'bin')  # Assuming 'bin' is the directory containing compiled .class files
+    
+    # Construct the classpath dynamically
+    classpath = java_files_directory
+    
+    # Construct the Java command
+    java_command = [
+        'java',  # Use 'java' command directly
+        '-XX:+ShowCodeDetailsInExceptionMessages',
+        '-cp',
+        classpath,
+        'main.java.com.example.Main'  # Update the package and main class name if needed
+    ]
 
     game_process = subprocess.Popen(java_command)
 
-def close_game_after_timeout():
-    time.sleep(60)  # Change this to 70 seconds later
+def close_game():
+    global game_process
     if game_process and game_process.poll() is None:  # If the game process is still running
         game_process.terminate()  # Terminate the game process
+
+def close_game_after_timeout():
+    global cleanup_done
+    if not cleanup_done:
+        time.sleep(60)  # Change this to 60 seconds later
+        close_game()
+        cleanup_done = True
 
 @app.route('/')
 def index():
@@ -47,10 +54,13 @@ def run_game_route():
         return 'Game is already running!'
 
     run_game()  # Run the game
-
-    timeout_thread = threading.Thread(target=close_game_after_timeout)
-    timeout_thread.start()
-    print("Game is running")
+    
+    # Start the cleanup timer if it hasn't been started yet!
+    global cleanup_done
+    if not cleanup_done:
+        cleanup_thread = threading.Thread(target=close_game_after_timeout)
+        cleanup_thread.start()
+        cleanup_done = True
 
     return 'Java game started!'
 
