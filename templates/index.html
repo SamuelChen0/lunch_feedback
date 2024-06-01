@@ -1082,9 +1082,11 @@ function showSuccessPopupAndCloseAfterTwoSeconds(exists) {
     const successPopup = document.getElementById("successPopup");
     successPopup.style.display = "block";
     console.log("Successful");
+    
     // Close the success popup after two seconds
     setTimeout(function () {
         successPopup.style.display = "none";
+        
         if (!exists) {
             fetch('/rungame')
                 .then(response => {
@@ -1117,9 +1119,6 @@ function showSuccessPopupAndCloseAfterTwoSeconds(exists) {
         }
     }, 2000); // 2000 milliseconds (2 seconds)
 }
-
-
-
 
     function displayRating(rating) {
         const popup = document.getElementById("popup");
