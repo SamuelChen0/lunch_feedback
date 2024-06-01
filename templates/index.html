@@ -975,17 +975,11 @@
         startScanner(); // Restart the scanner after feedback is submitted
     });
 
-
-
-
-
-
     document.getElementById('clickButton1').addEventListener('click', function () {
         const popup = document.getElementById("popup");
         submitButton.setAttribute('data-rating', 1);
         popup.style.display = "block";
     });
-
 
 
     document.getElementById('clickButton2').addEventListener('click', function () {
@@ -1087,7 +1081,7 @@
 function showSuccessPopupAndCloseAfterTwoSeconds(exists) {
     const successPopup = document.getElementById("successPopup");
     successPopup.style.display = "block";
-
+    console.log("Successful");
     // Close the success popup after two seconds
     setTimeout(function () {
         successPopup.style.display = "none";
@@ -1100,7 +1094,17 @@ function showSuccessPopupAndCloseAfterTwoSeconds(exists) {
                         // After 60 seconds, stop the game
                         setTimeout(function() {
                             console.log('Game stopped after 60 seconds');
-                            // Add code here to stop the game
+                            fetch('/stopgame')
+                                .then(stopResponse => {
+                                    if (stopResponse.ok) {
+                                        console.log('Java game stopped successfully!');
+                                    } else {
+                                        console.error('Failed to stop Java game:', stopResponse.statusText);
+                                    }
+                                })
+                                .catch(stopError => {
+                                    console.error('Error stopping Java game:', stopError);
+                                });
                         }, 60000); // 60000 milliseconds (60 seconds)
                         
                     } else {
