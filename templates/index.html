@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAS Lunch Feedback</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        jQuery(document).ready(function ($) {
+            $('#userID').select2({
+                placeholder: "Select a name",
+                allowClear: true,
+                theme: "classic"
+            });
+        });
+    </script>
+
+    <style>
+        .select2-container--open .select2-dropdown {
+            z-index: 1000 !important;
+        }
+
+        #interactive.viewport {
+            width: 100%;
+            /* Use the full width of the container */
+            height: 100%;
+            /* Use the full height of the container */
+        }
+
+        #goToScannerButton {
+            position: absolute;
+            /* Changed from 'fixed' to 'absolute' */
+            left: 20px;
+            /* Distance from the left edge */
+            top: 20px;
+            /* Distance from the top */
+            width: 200px;
+            height: 60px;
+            margin: 0;
+            padding: 10px;
+            font-size: 20px;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: linear-gradient(45deg, rgb(227, 156, 156), rgb(170, 4, 4), rgb(251, 255, 136));
+            background-size: 150% 150%;
+            animation: flowngWater 2s infinite linear;
+            will-change: background-position;
+        }
+
+        #goToScannerButton:hover {
+            background-color: #367c39;
+        }
+
+
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #000000;
+            width: 30%;
+            /* Adjust the width as needed */
+            margin-bottom: 10px;
+        }
+
+        #userID {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #000000;
+            width: 90%;
+            /* Adjust the width as needed */
+            margin: 10px auto;
+            /* Updated margin for centering horizontally */
+        }
+
+
+        #confirmIDButton {
+            padding: 12px 35px;
+            /* Increased padding for larger size */
+            font-size: 15px;
+            /* Larger font size */
+            border-radius: 8px;
+            /* Adjusted border-radius for aesthetic */
+            /* You can also add other styles like background color, border, etc. to make it stand out more */
+            background: linear-gradient(45deg, yellow, lightblue, rgb(138, 255, 136));
+            background-size: 150% 150%;
+            /* Reduced from 300% to 150% */
+            animation: flowingWater 2s infinite linear;
+            will-change: background-position;
+            /* Optimizes for animations */
+        }
+
+
+        label {
+            color: white;
+            /* Set the text color to white */
+        }
+
+        label[for="userID"] {
+            font-size: 40px;
+            /* Adjust the font size as needed */
+            /* You can also add other styling here if needed, like font-weight, color, etc. */
+        }
+
+        body {
+
+            font-family: Arial, sans-serif;
+            /* Use Dancing Script font */
+            color: black;
+            /* Change the text color to black */
+            background-color: white;
+            /* Set the background color to white */
+
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('static/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            z-index: -1;
+            opacity: 0.43;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            text-align: center;
+            color: rgb(5, 5, 5);
+            /* Set the text color to white */
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            text-align: center;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            width: 50%;
+            height: 75%;
+            margin-top: 30px;
+        }
+
+        .popup-content {
+            background: #ffffff;
+            width: 80%;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .popup-content p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: black;
+            /* Set the text color to black */
+        }
+
+        .popup-content input[type="text"],
+        .popup-content button {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .popup-content {
+            /* your existing styles */
+            position: relative;
+        }
+
+        .close-button {
+            font-size: 28px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            color: rgb(0, 0, 0);
+            /* Set the text color to white */
+        }
+
+        .close-button:hover {
+            color: red;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes flowingWater {
+            0% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 0% 50%;
+            }
+
+            5% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 10% 50%;
+            }
+
+            10% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 20% 50%;
+            }
+
+            15% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 30% 50%;
+            }
+
+            20% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 40% 50%;
+            }
+
+            25% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 50% 50%;
+            }
+
+            30% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 60% 50%;
+            }
+
+            35% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 70% 50%;
+            }
+
+            40% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 80% 50%;
+            }
+
+            45% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 90% 50%;
+            }
+
+            50% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 100% 50%;
+            }
+
+            55% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 110% 50%;
+            }
+
+            60% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 120% 50%;
+            }
+
+            65% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 130% 50%;
+            }
+
+            70% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 140% 50%;
+            }
+
+            75% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 150% 50%;
+            }
+
+            80% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 160% 50%;
+            }
+
+            85% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 170% 50%;
+            }
+
+            90% {
+                background: linear-gradient(45deg, yellow, lightblue, lightblue);
+                background-position: 180% 50%;
+            }
+
+            95% {
+                background: linear-gradient(45deg, lightblue, yellow, lightblue);
+                background-position: 190% 50%;
+            }
+
+            100% {
+                background: linear-gradient(45deg, lightblue, lightblue, yellow);
+                background-position: 200% 50%;
+            }
+        }
+
+
+
+        @keyframes flowngWater {
+            0% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 0% 50%;
+            }
+
+            10% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 20% 50%;
+            }
+
+            20% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 40% 50%;
+            }
+
+            30% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 60% 50%;
+            }
+
+            40% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 80% 50%;
+            }
+
+            50% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 100% 50%;
+            }
+
+            60% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 120% 50%;
+            }
+
+            70% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 140% 50%;
+            }
+
+            80% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 160% 50%;
+            }
+
+            90% {
+                background: linear-gradient(45deg, red, red, orange);
+                background-position: 180% 50%;
+            }
+
+            100% {
+                background: linear-gradient(45deg, orange, red, red);
+                background-position: 200% 50%;
+            }
+
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .image-button {
+            background: transparent;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 15px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-button:hover {
+            background: linear-gradient(to bottom, #4CAF50, #45a049);
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #000000;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .click_size {
+            font-size: 30px;
+            /* Adjust the size as needed */
+            color: rgb(5, 5, 5);
+        }
+
+
+
+        #submitFeedbackButton {
+            position: relative;
+            z-index: 0;
+            min-width: 200px;
+            border: 2px solid currentColor;
+            border-radius: 48px;
+            color: #626FAA;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            overflow: hidden;
+            transition: 0.2s transform ease-in-out;
+            will-change: transform;
+            padding: 10px 20px;
+        }
+
+        #submitFeedbackButton:after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            background-color: #626faa;
+            border-radius: 3rem;
+            transform: translate(-100%, 0) rotate(10deg);
+            transform-origin: top left;
+            transition: 0.2s transform ease-out;
+            will-change: transform;
+        }
+
+        #submitFeedbackButton:hover:after {
+            transform: translate(0, 0);
+        }
+
+        #submitFeedbackButton:hover {
+            border: 2px solid transparent;
+            color: #FFFFFF;
+            transform: scale(1.05);
+            will-change: transform;
+        }
+
+        .click_size:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #barcode-scanner {
+            position: fixed;
+            /* Position it over the entire page content */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            /* Full width of the viewport */
+            height: 100vh;
+            /* Full height of the viewport */
+            z-index: 100;
+            /* High z-index to ensure it is on top */
+            display: flex;
+            /* Use flexbox for centering the contents */
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            /* Semi-transparent black background */
+        }
+
+        #interactive.viewport {
+            width: 100%;
+            /* Full width of its container */
+            height: 100%;
+            /* Full height of its container */
+            position: relative;
+        }
+
+        #interactive.viewport video {
+            object-fit: cover;
+            /* Ensure the video fills the entire container */
+            width: 100%;
+            height: 100%;
+        }
+
+        #todaysMenu,
+        #tomorrowsMenu {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #todaysMenu h2,
+        #tomorrowsMenu h2 {
+            color: #333;
+            /* Change the color as needed */
+            margin-bottom: 10px;
+        }
+
+        #todaysMenu div,
+        #tomorrowsMenu div {
+            display: flex;
+            /* Use flexbox to align children in a row */
+            justify-content: center;
+            /* Center the items horizontally */
+            flex-wrap: wrap;
+            /* Wrap items to next line if they don't fit */
+            gap: 10px;
+            /* Add some space between items */
+        }
+
+        #todaysMenu div p,
+        #tomorrowsMenu div p {
+            font-size: 24px;
+            /* Increase the font size */
+            background-color: #f8f8f8;
+            /* Light background for each dish */
+            padding: 10px 15px;
+            /* Adjust padding for better spacing */
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
+            margin: 5px;
+            /* Add some margin for spacing between items */
+            color: #333;
+            /* Optional: Change text color */
+
+        }
+
+        .celebration-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.8) 70%);
+            animation: pulsate 3s ease-in-out infinite;
+            border-radius: 50%;
+            pointer-events: none;
+            /* Prevents the animation layer from interfering with clicks */
+            z-index: -1;
+            /* Ensure animation is behind the image */
+        }
+
+        @keyframes pulsate {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script>
+        // const firebaseConfig = {
+        //     apiKey: "AIzaSyBkRztWoH2RIb9LwMB9yB2yzfFFBVacxag",
+        //     authDomain: "lunch-feedback.firebaseapp.com",
+        //     projectId: "lunch-feedback",
+        //     storageBucket: "lunch-feedback.appspot.com",
+        //     messagingSenderId: "1030662462935",
+        //     appId: "1:1030662462935:web:bc1e374f3484d3a0a8bf92",
+        //     measurementId: "G-JLBS8GVJ5J"
+        // };
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCYDYQn11Lo3-oUStmX23VaHDLhZXDyhhc",
+            authDomain: "lunchfeedback-3d60b.firebaseapp.com",
+            databaseURL: "https://lunchfeedback-3d60b-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "lunchfeedback-3d60b",
+            storageBucket: "lunchfeedback-3d60b.appspot.com",
+            messagingSenderId: "39937676265",
+            appId: "1:39937676265:web:638b2a2e5a62062c93f178",
+            measurementId: "G-SQC89ZQVH8"
+        };
+
+        firebase.initializeApp(firebaseConfig)
+
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<body>
+
+    <div>Teachable Machine Image Model</div>
+    <button type="button" onclick="init()">Start</button>
+    <div id="webcam-container"></div>
+    <div id="label-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script type="text/javascript">
+        // the link to your model provided by Teachable Machine export panel
+        const URL = "{{ url_for('static', filename='model/') }}";
+
+        let model, webcam, labelContainer, maxPredictions;
+
+        // Load the image model and setup the webcam
+        async function init() {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+
+            // load the model and metadata
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+
+            // Convenience function to setup a webcam
+            const flip = true; // whether to flip the webcam
+            webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
+            await webcam.setup(); // request access to the webcam
+            await webcam.play();
+            window.requestAnimationFrame(loop);
+
+            // append elements to the DOM
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) { // and class labels
+                labelContainer.appendChild(document.createElement("div"));
+            }
+        }
+
+        async function loop() {
+            webcam.update(); // update the webcam frame
+            await predict();
+            window.requestAnimationFrame(loop);
+        }
+
+        // run the webcam image through the image model
+        async function predict() {
+            // predict can take in an image, video or canvas html element
+            const prediction = await model.predict(webcam.canvas);
+            for (let i = 0; i < maxPredictions; i++) {
+                const classPrediction =
+                    prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+                labelContainer.childNodes[i].innerHTML = classPrediction;
+            }
+        }
+    </script>
+
+    <div id="welcomeMessage" style="font-size: 60px; color: rgb(6, 6, 6); margin-top: 20px;"></div>
+    <div id="barcode-scanner">
+        <div style="text-align: center; padding: 20px;">
+            <h2 style="color:#ffffff; font-size: 36px; margin-bottom: 20px;">Step 1</h2>
+            <h1 style="color:#ffffff; margin-bottom: 50px;">Please use the barcode scanner to scan the barcode on your
+                Student ID</h1>
+            <img src="static/scanning.jpg" alt="Scanning Icon" style="max-width: 200px; margin: 20px auto;">
+
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 50px;">
+                <label for="userID" style="font-size: 24px; margin-bottom: 0;">or Select Your Name:</label>
+                <select id="userID" name="userID"
+                    style="width: 30%; max-width: 100px; padding: 10px 0; line-height: 1.5; font-size: 18px;">
+                    <option value="">Select name</option>
+                    <!-- JavaScript will add options here -->
+                </select>
+                <button id="confirmIDButton" style="padding: 10px 15px;"><b>Confirm Name</b></button>
+            </div>
+            <div style="position: relative; text-align: center; margin-top: 20px;">
+                <!-- Image -->
+                <img src="static/Screenshot%202024-02-22%20112229.jpg" alt="Screenshot"
+                    style="width: 80%; max-width: 800px; height: auto;">
+
+                <!-- Celebrating animation -->
+                <div class="celebration-animation"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="popup" id="successPopup">
+        <div class="popup-content">
+            <p>Your response has been recorded successfully!</p>
+        </div>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <span class="close-button" id="closePopup">X</span>
+            <p id="selectedRating"></p> <!-- Place to display the selected rating -->
+            <p>Suggestion/Complaint (optional)</p>
+            <input type="text" id="popupTextInput" placeholder="Enter your text (optional)">
+            <button id="submitFeedbackButton">Submit</button>
+            
+        </div>
+    </div>
+
+    <h1>HAS Lunch Feedback</h1>
+    <div class="button-container">
+        <div>
+            <p class="click_size" id="clickCount1STAR">Very bad</p>
+            <button id="clickButton1" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
+            </button>
+        </div>
+        <div>
+            <p class="click_size">Bad</p>
+            <button id="clickButton2" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
+            </button>
+        </div>
+        <div>
+            <p class="click_size">SoSo</p>
+            <button id="clickButton3" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
+            </button>
+        </div>
+        <div>
+            <p class="click_size">Good</p>
+            <button id="clickButton4" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
+            </button>
+        </div>
+        <div>
+            <p class="click_size">Excellent</p>
+            <button id="clickButton5" class="image-button">
+                <i class="fa fa-star fa-2x" style="color: gold;font-size: 75px;"></i>
+            </button>
+        </div>
+
+        <div>
+            <button id="goToScannerButton" style="margin-top: 20px;">
+                &#8592; <b>Go Back</b>
+            </button>
+        </div>
+
+    </div>
+
+    <div id="todaysMenu" style="margin-top: 20px;">
+        <h2>Today's Menu</h2>
+        <div id="menuItems"> <!-- Container for the dishes -->
+            <!-- Menu items will be added here by the script -->
+        </div>
+    </div>
+
+    <!-- Tomorrow's Menu Section -->
+    <div id="tomorrowsMenu" style="margin-top: 20px;">
+        <h2>Tomorrow's Menu</h2>
+        <div id="tomorrowsMenuItems"> <!-- Container for tomorrow's dishes -->
+            <!-- Tomorrow's menu items will be added here by the script -->
+        </div>
+    </div>
+
+
+
+    <!-- <img src="https://media2.giphy.com/media/a5viI92PAF89q/200w.gif?cid=6c09b952kiuxs4jgkbxxy4v7pjhavr0l2cmpsfxgcmvyzrci&ep=v1_gifs_search&rid=200w.gif&ct=g" > -->
+    <!-- <img src="https://media1.giphy.com/media/A5ugHVbuFL3uo/200w.gif?cid=6c09b952cc2tbgf6hciig4dbpeg73xgq5npjr7hdigkfcrko&ep=v1_gifs_search&rid=200w.gif&ct=g" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
+    <!-- <img src="https://i.pinimg.com/originals/79/3e/f5/793ef581042c309cbb3d8ef41b5e9a16.gif" alt="Fancy GIF" style="width: 25%; max-width: 500px; display: block; margin: 20px; float: left; auto;"> -->
+    <!-- <img src="https://static.wixstatic.com/media/2c4bb8_d5088ac72fc64b6e967d5ede6c912128~mv2.jpg/v1/fill/w_1224,h_865,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/112%E5%B9%B411%E6%9C%88%E4%BB%BD%20Lunch%20Menu.jpg" style = "float: middle;"> -->
+
+    <!-- <img scr="NovemberLunchMenu_pages-to-jpg-0001.jpg" style = "float: middle"> -->
+
+</body>
+
+</html>
+
+
+
+<script>
+
+    function loadStudentData() {
+        const csvUrl = 'static/studentIDs.csv'; // Replace with the URL to your CSV file
+
+        fetch(csvUrl)
+            .then(response => response.text())
+            .then(data => {
+                const lines = data.split('\n');
+                lines.forEach((line, index) => {
+                    if (index > 0 && line) { // Skip the header line
+                        // Using a regular expression to match the pattern of the line
+                        const match = line.match(/(\d+),(\d+),(\d+),\"(.*?)\",(\w+)/);
+                        console.log(match)
+                        if (match) {
+                            const name = match[4]; // Extracted name
+                            const id = match[5]; // Extracted ID
+
+                            let fullName;
+                            if (name.includes(',')) {
+                                const [surname, firstNameAndNickname] = name.split(/,(.+)/);
+                                fullName = `${firstNameAndNickname.trim()} ${surname.trim()}`;
+                            } else {
+                                fullName = name;
+                            }
+
+                            const option = document.createElement('option');
+                            option.value = id.trim();
+                            option.textContent = fullName;
+                            document.getElementById('userID').appendChild(option);
+                        }
+
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading student data:', error));
+    }
+
+    let lastKeypressTime = 0;
+
+    document.getElementById('confirmIDButton').addEventListener('click', function () {
+        var userID = document.getElementById('userID').value;
+        var userName = $('#userID option:selected').text(); // Get the selected user's name
+        if (userID === "") {
+            alert("Please select your ID.");
+        } else {
+            document.getElementById('welcomeMessage').innerHTML = "Welcome " + userName + "!"; // Update the welcome message
+            // Hide the scanner and ID input, or perform other actions as needed
+            document.getElementById('barcode-scanner').style.display = 'none';
+            // Enable other parts of the page for feedback submission
+        }
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get today's date in the format "MM-DD-YYYY"
+
+        displayMenuForDate(new Date()); // Display today's menu
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1); // Set to tomorrow's date
+        displayMenuForDate(tomorrow); // Display tomorrow's menu
+
+        document.addEventListener('keydown', handleBarcodeScannerInput);
+        startScanner();
+        loadStudentData();
+    });
+
+
+    function handleBarcodeScannerInput(e) {
+        // Check if the input is coming in quick succession (like from a barcode scanner)
+        const currentTime = new Date().getTime();
+        if (currentTime - lastKeypressTime < 50) {
+            // Concatenate barcode input if it's part of the current scanning
+            barcodeData += e.key;
+        } else {
+            // Reset barcode data if it's a new scanning
+            barcodeData = e.key;
+        }
+        lastKeypressTime = currentTime;
+
+        // Check for a specific key (like Enter) to finish scanning
+        if (e.key === 'Enter') {
+            // Prevent the default action to avoid form submission
+            e.preventDefault();
+
+            barcodeData = barcodeData.replace('Shift', '').replace('Enter', '');
+
+            // Process the scanned barcode data
+
+            barcodeData = barcodeData.replace('Shift', '').replace('Enter', '');
+            console.log(barcodeData.trim())
+            processBarcodeData(barcodeData.trim());
+        }
+    }
+
+    function processBarcodeData(barcode) {
+        // Set the userID select dropdown to the value of the scanned barcode
+        const userIDSelect = document.getElementById('userID');
+        let found = false;
+        for (let option of userIDSelect.options) {
+            if (option.value === barcode) {
+                option.selected = true;
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            // Handle the case where the barcode does not match any option
+            console.warn('Barcode does not match any user ID');
+            // Optionally, you can alert the user or take other actions
+        }
+        // Hide the scanner view and proceed to the main page
+        var userID = document.getElementById('userID').value;
+        var userName = $('#userID option:selected').text();
+        document.getElementById('welcomeMessage').innerHTML = "Welcome " + userName + "!"; // Update the welcome message
+        document.getElementById('barcode-scanner').style.display = 'none';
+        // Additional code to handle the scanned barcode
+    }
+
+    function displayMenuForDate(date) {
+        const dateString = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).split('/').join('-');
+
+        const menuRef = firebase.database().ref('menu/' + dateString);
+        menuRef.once('value', function (snapshot) {
+            const menu = snapshot.val();
+            if (menu) {
+                if (dateString === new Date().toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }).split('/').join('-')) {
+                    displayMenu(menu, 'menuItems'); // Today's menu
+                } else {
+                    displayMenu(menu, 'tomorrowsMenuItems'); // Tomorrow's menu
+                }
+            } else {
+                console.log('No menu found for ' + dateString);
+            }
+        });
+    }
+
+    function displayMenu(menu, containerId) {
+        let dishesContainer = document.getElementById(containerId);
+        dishesContainer.innerHTML = ''; // Clear previous dishes
+
+        for (const key in menu) {
+            const dish = menu[key];
+            const dishElement = document.createElement('p');
+            dishElement.textContent = dish;
+            dishesContainer.appendChild(dishElement); // Add to the dishes container
+        }
+    }
+
+    document.getElementById('confirmIDButton').addEventListener('click', function () {
+        var userID = document.getElementById('userID').value;
+        if (userID === "") {
+            alert("Please select your ID.");
+        } else {
+            // Hide the scanner and ID input, or perform other actions as needed
+            document.getElementById('barcode-scanner').style.display = 'none';
+            // Enable other parts of the page for feedback submission
+        }
+    });
+    function startScanner() {
+        document.getElementById('barcode-scanner').style.display = 'flex';
+    }
+
+
+
+    document.getElementById('submitFeedbackButton').addEventListener('click', function () {
+        // your existing feedback submission code
+        startScanner(); // Restart the scanner after feedback is submitted
+    });
+
+    document.getElementById('clickButton1').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 1);
+        popup.style.display = "block";
+    });
+
+
+    document.getElementById('clickButton2').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 2);
+        popup.style.display = "block";
+
+    });
+    document.getElementById('clickButton3').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 3);
+        popup.style.display = "block";
+
+    });
+    document.getElementById('clickButton4').addEventListener('click', function () {
+        const popup = document.getElementById("popup");
+        submitButton.setAttribute('data-rating', 4);
+        popup.style.display = "block";
+    });
+
+    // Close the popup when clicking the overlay
+    const overlay = document.getElementById('popup');
+    overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) {
+            overlay.style.display = "none";
+            feedbackInput.value = ''; // Clear the input field
+        }
+    });
+
+    // Close the popup when clicking the close button
+    const closePopupButton = document.getElementById('closePopup');
+    closePopupButton.addEventListener('click', function () {
+        overlay.style.display = "none";
+        feedbackInput.value = ''; // Clear the input field
+    });
+
+    const popup = document.getElementById("popup");
+    const feedbackInput = document.getElementById('popupTextInput');
+    const submitButton = document.getElementById('submitFeedbackButton');
+    
+    submitButton.addEventListener('click', function () {
+    const rating = parseInt(submitButton.getAttribute('data-rating'));
+    const feedback = feedbackInput.value.trim(); // Get feedback comment from input field
+    const userID = document.getElementById('userID').value.trim(); // Get user ID from input field
+
+    if (userID === "") {
+        alert("Please enter your ID before submitting feedback.");
+        return;
+    }
+
+    // Get the current date
+    const currentDate = new Date().toDateString(); // Convert to date string for comparison
+
+    // Reference to the "feedback" node in the database
+    const feedbackRef = firebase.database().ref('feedback');
+
+    //fetch entry from db with given userID + date
+    const query = feedbackRef.orderByChild('userID').equalTo(userID);
+    query.once('value')
+        .then(snapshot => {
+            let exists = false;
+            snapshot.forEach(childSnapshot => {
+                const feedbackData = childSnapshot.val();
+                const feedbackDate = new Date(feedbackData.date).toDateString(); // Convert to date string for comparison
+
+                // Check if the feedback date is within the same day
+                if (feedbackDate === currentDate) {
+                    // Feedback already exists for today
+                    exists = true;
+                }
+            });
+
+            // Now you have the exists variable indicating if entry exists or not
+            console.log('Entry exists:', exists);
+
+            // Write rating, feedback, user ID, and date to the database
+            feedbackRef.push({ rating: rating, feedback: feedback, userID: userID, date: new Date().toISOString() })
+                .then(() => {
+                    console.log('Rating, feedback, and ID successfully written to the database');
+                    popup.style.display = "none";
+                    feedbackInput.value = ''; // Clear the input field
+                    document.getElementById('userID').value = ''; // Clear the ID input field
+                    showSuccessPopupAndCloseAfterTwoSeconds(exists);
+                    startScanner();
+                    // Your existing code to update click count or other UI elements as necessary
+                    if (exists) {
+                        alert("You already played the game!");
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error writing rating, feedback, and ID to the database: ', error);
+                });
+        })
+        .catch(error => {
+            console.error('Error fetching feedback data from the database:', error);
+        });
+});
+
+function showSuccessPopupAndCloseAfterTwoSeconds(exists) {
+    const successPopup = document.getElementById("successPopup");
+    successPopup.style.display = "block";
+    console.log("Successful");
+    
+    // Close the success popup after two seconds
+    setTimeout(function () {
+        successPopup.style.display = "none";
+        
+        if (!exists) {
+            fetch('/rungame')
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Java game started!');
+                        
+                        // After 60 seconds, stop the game
+                        setTimeout(function() {
+                            console.log('Game stopped after 60 seconds');
+                            fetch('/stopgame')
+                                .then(stopResponse => {
+                                    if (stopResponse.ok) {
+                                        console.log('Java game stopped successfully!');
+                                    } else {
+                                        console.error('Failed to stop Java game:', stopResponse.statusText);
+                                    }
+                                })
+                                .catch(stopError => {
+                                    console.error('Error stopping Java game:', stopError);
+                                });
+                        }, 60000); // 60000 milliseconds (60 seconds)
+                        
+                    } else {
+                        console.error('Failed to start Java game:', response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error starting Java game:', error);
+                });
+        }
+    }, 2000); // 2000 milliseconds (2 seconds)
+}
+
+    function displayRating(rating) {
+        const popup = document.getElementById("popup");
+        const ratingDisplay = document.getElementById("selectedRating");
+
+        // Clear the existing content in ratingDisplay
+        ratingDisplay.innerHTML = "";
+
+        // Create stars dynamically based on the rating and make them initially invisible
+        for (let i = 0; i < 5; i++) {
+            const starIcon = document.createElement("i");
+            starIcon.className = "fa fa-star";
+            starIcon.style.color = "gold";
+            starIcon.style.visibility = i < rating ? "visible" : "hidden";
+            ratingDisplay.appendChild(starIcon);
+        }
+
+        // Update the rating display with the user ID
+        const userID = document.getElementById('userID').value.trim();
+        ratingDisplay.innerHTML += "<br>ID: " + userID;
+
+        // Trigger the blinking effect
+        blinkRatingButtons();
+        // Wait for the blinking effect to finish (adjust the timeout duration as needed)
+        setTimeout(function () {
+            popup.style.display = "block";
+        }, 1000); // Adjust the timeout duration (in milliseconds) as needed
+    }
+    
+    function blinkRatingButtons() {
+        const ratingButtons = document.querySelectorAll('.image-button');
+        ratingButtons.forEach(button => {
+            button.classList.add('blinking'); // Add a CSS class for blinking effect
+            setTimeout(() => {
+                button.classList.remove('blinking'); // Remove the blinking class after a timeout
+            }, 1000); // Adjust the timeout duration (in milliseconds) as needed
+        });
+    }
+
+
+    document.getElementById('clickButton1').addEventListener('click', function () {
+    displayRating(1);
+    blinkRatingButtons(); // Call the blinking function
+    });
+
+    document.getElementById('clickButton2').addEventListener('click', function () {
+        displayRating(2);
+        blinkRatingButtons(); // Call the blinking function
+    });
+
+    document.getElementById('clickButton3').addEventListener('click', function () {
+        displayRating(3);
+        blinkRatingButtons(); // Call the blinking function
+    });
+
+    document.getElementById('clickButton4').addEventListener('click', function () {
+        displayRating(4);
+        blinkRatingButtons(); // Call the blinking function
+    });
+
+    document.getElementById('clickButton5').addEventListener('click', function () {
+        displayRating(5);
+        blinkRatingButtons(); // Call the blinking function
+    });
+    // Function to display the suggestion part after clicking a rating button
+    function displayRating(rating) {
+        const popup = document.getElementById("popup");
+        const ratingDisplay = document.getElementById("selectedRating");
+
+        let stars = "";
+        for (let i = 0; i < rating; i++) {
+            stars += "<i class='fa fa-star' style='color: gold;'></i>"; // Add a star for each point in the rating
+        }
+        ratingDisplay.innerHTML = "Rating: " + stars; // Update the rating display with stars
+        submitButton.setAttribute('data-rating', rating);
+
+        const userID = document.getElementById('userID').value.trim();
+        ratingDisplay.innerHTML += "<br>ID: " + userID; // Add the user ID to the rating display
+
+        popup.style.display = "block";
+    }
+
+    document.getElementById('goToScannerButton').addEventListener('click', function () {
+        // Start the scanner again
+        startScanner();
+    });
+
+    document.getElementById('clickButton1').addEventListener('click', function () {
+        displayRating(1);
+    });
+
+    document.getElementById('clickButton2').addEventListener('click', function () {
+        displayRating(2);
+    });
+
+    document.getElementById('clickButton3').addEventListener('click', function () {
+        displayRating(3);
+    });
+
+    document.getElementById('clickButton4').addEventListener('click', function () {
+        displayRating(4);
+    });
+
+    document.getElementById('clickButton5').addEventListener('click', function () {
+        displayRating(5);
+    });
+
+
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+
+</body>
+
+</html>

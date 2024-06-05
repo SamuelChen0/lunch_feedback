@@ -1,0 +1,4 @@
+.venv
+env
+output.txt
+static/studentIDs.csv
