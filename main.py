@@ -12,7 +12,7 @@ def run_game():
     global game_process
     
     # Get the directory path of your JAR file
-    jar_file_path = os.path.join(os.path.dirname(__file__), 'PlatformGameProject.jar')
+    jar_file_path = os.path.join(os.path.dirname(__file__), 'PlatformGameProject8.jar')
     print(f"JAR file path: {jar_file_path}")
     
     # Construct the Java command
